@@ -1,0 +1,24 @@
+{
+  "name": "dataDouble",
+  "version": "1.0",
+  "description": "Critical Data Studies Final F2018",
+  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    },
+  "page_action": {
+      "default_popup": "popup.html"
+    },
+  "content_scripts": [
+      {
+      "matches": [
+          "http://*/*",
+          "https://*/*"
+          ],
+      "js": ["test.js"],
+      "run_at": "document_end"
+      }
+  ],
+  "manifest_version": 2
+}
