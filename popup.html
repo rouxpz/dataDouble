@@ -2,17 +2,21 @@
 <head>
   <title>CDS Final Popup</title>
   <style>
-        button {
-          height: 30px;
-          width: 100px;
-          outline: none;
-        }
-      </style>
+      button {
+        height: 30px;
+        width: 100px;
+        outline: none;
+      }
+  </style>
+  <script type="text/javascript" src="js/caman.full.min.js"></script>
 </head>
 
 <body>
-  <img src="img/test-photo.png" width="300" alt="">
+  <!-- <canvas id="canvas" width="300" height="389"> -->
+  <img id="canvas" src="img/test-photo.png" width="300" height="389" alt="">
+  <!-- </canvas> -->
   <button id="updatePhoto">update portrait</button>
   <span id="linkNumber"></span>
   <script type="text/javascript" src="popup.js"></script>
+  <script type="text/javascript" src="js/image-manipulation.js"></script>
 </body>
