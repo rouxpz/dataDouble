@@ -1,3 +1,5 @@
+//background script running in the extension.
+
 let clickedLinks = [];
 
 chrome.runtime.onInstalled.addListener(function() {

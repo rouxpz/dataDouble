@@ -1,3 +1,5 @@
+//translate collected data into image in popup.
+
 let updatePhoto = document.getElementById("updatePhoto");
 var links = 0;
 
@@ -25,7 +27,9 @@ function updateImage() {
   Caman("#canvas", function() {
     //manipulate image here based on data from popup.js
     // this.crop(200, 300);
-    this.brightness(links);
+    // this.brightness(links);
+    this.contrast(links/10);
+    this.gamma(links/100);
     // this.render();
     // this.resize({
     //   width: 300,

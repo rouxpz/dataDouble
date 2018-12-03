@@ -1,0 +1,9 @@
+body {
+  font-family: Arial;
+}
+
+button {
+  height: 30px;
+  width: 100px;
+  outline: none;
+}

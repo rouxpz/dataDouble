@@ -1,3 +1,5 @@
+//code for interacting with user browsing activity.
+
 function trackMouse() {
   let images = document.getElementsByTagName("img");
   let links = document.getElementsByTagName("a");
