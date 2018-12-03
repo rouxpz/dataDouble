@@ -1,17 +1,19 @@
-let changeColor = document.getElementById('changeColor');
+let updatePhoto = document.getElementById("updatePhoto");
 
-chrome.storage.sync.get('color', function(data) {
-  changeColor.style.backgroundColor = data.color;
-  changeColor.setAttribute('value', data.color);
-});
+updatePhoto.onclick = function() {
+  chrome.runtime.sendMessage({
+    msg: "update data"
+  });
+}
 
-changeColor.onclick = function(element) {
-    let color = element.target.value;
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.executeScript(
-          tabs[0].id,
-          {code: 'document.body.style.backgroundColor = "' + color + '";'});
-    });
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if (request.msg === "new link added") {
+            //  To do something
+            chrome.extension.getBackgroundPage().console.log("SENT TO POPUP");
+            chrome.extension.getBackgroundPage().console.log(request.data);
 
-    chrome.extension.getBackgroundPage().console.log('test');
-  };
+            document.getElementById("linkNumber").innerHTML = request.data.length + "links collected";
+        }
+    }
+);
