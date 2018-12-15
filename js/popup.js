@@ -88,15 +88,15 @@ function updateImage() {
   var outlierRatio = newData[6][1] / links;
   var infoRatio = newData[4][1] / links;
 
-  var ed = mapRange(newData[2][1], 0, 100, 9, 8); //flip edge detection range
-  var pos = mapRange(newData[0][1] + newData[3][1], 0, 100, 100, 0); //flip posterization range
+  var ed = mapRange(newData[2][1], 0, 10, 9, 8); //flip edge detection range
+  var pos = mapRange(newData[0][1] + newData[3][1], 0, 5, 20, 2); //flip posterization range
   var out = mapRange(outlierRatio, 0, 1, 50, -50); //mapping ratio of outliers
   var sat = mapRange(infoDiversity, 0, 10, -50, 50);
 
   Caman("#canvas", function() {
 
-    this.edgeDetect(ed); //social media
     this.posterize(pos); //consumer and financial
+    this.edgeDetect(ed); //social media
     this.saturation(sat); //diversity of news and information
     this.exposure(out); // anomalies/outliers
 
