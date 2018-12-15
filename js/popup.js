@@ -2,22 +2,30 @@
 
 let updatePhoto = document.getElementById("updatePhoto");
 var links = 0;
+var newData;
 
 updatePhoto.onclick = function() {
   chrome.runtime.sendMessage({
-    msg: "update data"
+    msg: "send data to popup"
   });
 }
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request.msg === "new link added") {
+        if (request.msg === "here is the new data") {
             //  To do something
             chrome.extension.getBackgroundPage().console.log("SENT TO POPUP");
             chrome.extension.getBackgroundPage().console.log(request.data);
 
-            links = request.data.length;
-            document.getElementById("linkNumber").innerHTML = request.data.length + " links collected";
+            newData = request.data;
+
+            var toPrint = '';
+
+            for (var i = 0; i < newData.length; i++) {
+              toPrint += newData[i][0] + ", " + newData[i][1] + "<br>";
+            }
+
+            document.getElementById("data").innerHTML = toPrint;
             updateImage();
         }
     }
@@ -42,20 +50,42 @@ Caman.Filter.register("posterize", function (adjust) {
   });
 });
 
+Caman.Filter.register("edgeDetect", function(degree) {
+    return this.processKernel("Edge Detect", [
+      -1, -1, -1,
+      -1, degree, -1,
+      -1, -1, -1
+    ]);
+});
+
+function mapRange(value, min, max, newMin, newMax) {
+  prop = (value - min) / (max - min);
+  newVal = newMin + prop * (newMax - newMin);
+  return newVal;
+}
+
 //manipulate image here based on data from popup.js
 function updateImage() {
+
+  // for (var i = 0; i < newData.length; i++) {
+  //
+  // }
+
+  ed = mapRange(newData[0][1] + newData[4][1], 0, 10, 9, 8);
   Caman("#canvas", function() {
+
     // this.crop(200, 300);
+    this.edgeDetect(ed);
+    this.posterize(newData[2][1]);
     // this.brightness(links);
-    this.contrast(links);
-    this.posterize(links);
-    this.gamma(links/100);
+    // this.contrast(links);
+    // this.gamma(links/100);
     // this.render();
     // this.resize({
     //   width: 300,
     //   height: 389
     // });
-    this.revert(false);
+    // this.revert(false);
     this.render();
   });
 }
