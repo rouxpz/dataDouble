@@ -1,10 +1,16 @@
-//background script running in the extension.
+//dataDouble
+//a project by roopa vasudevan
+//browser extension for chrome
+//special thanks to wendy chun and the members of the critical data studies course (f18) at upenn annenberg
+
+//background script running in the extension to collect context information and sort it to deliver to the popup.
 
 let updatedData = [['commerce', 0], ['search', 0], ['social', 0], ['finance', 0], ['info', 0], ['adult', 0], ['confounder', 0]];
 let keyLog = '';
 let words = [];
 let topTen = [];
 let infoLinks = [];
+let totalPortraits = 0;
 
 chrome.runtime.onInstalled.addListener(function() {
   chrome.storage.sync.set({updatedData: updatedData}, function() {
@@ -89,16 +95,19 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       return b[1] - a[1];
     });
 
-    sorted.length = 10;
+    sorted.length = 5;
     console.log(sorted);
+    console.log("Info Diversity: " + infoLinks.length);
 
     //send everything to popup
     chrome.runtime.sendMessage({
       msg: "here is the new data",
       data: updatedData,
-      keys: words,
-      linkNumber: infoLinks.length
+      keys: sorted,
+      linkNumber: infoLinks.length,
+      totalPortraits: totalPortraits
     });
     console.log("new data sent to popup");
+    totalPortraits += 1;
   }
 });

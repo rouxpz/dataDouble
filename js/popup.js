@@ -1,10 +1,17 @@
-//translate collected data into image in popup.
+//dataDouble
+//a project by roopa vasudevan
+//browser extension for chrome
+//utilizes caman.js (http://camanjs.com/) for image manipulation
+//special thanks to wendy chun and the members of the critical data studies course (f18) at upenn annenberg
+
+//this script translates collected data into the final image and info in the extension popup.
 
 let updatePhoto = document.getElementById("updatePhoto");
-let links = 0;
+let links;
 let newData;
 let topWords;
 let infoDiversity;
+let portraitNumber;
 
 updatePhoto.onclick = function() {
   chrome.runtime.sendMessage({
@@ -23,11 +30,12 @@ chrome.runtime.onMessage.addListener(
             newData = request.data;
             topWords = request.keys;
             infoDiversity = request.linkNumber;
+            portraitNumber = request.totalPortraits;
 
             var toPrint = '';
 
-            for (var i = 0; i < words.length; i++) {
-              toPrint += words[i] + "; ";
+            for (var i = 0; i < topWords.length; i++) {
+              toPrint += topWords[i] + "; ";
             }
 
             document.getElementById("data").innerHTML = toPrint;
@@ -94,5 +102,8 @@ function updateImage() {
 
     this.revert(false);
     this.render();
+    // this.render(function() {
+    //   this.save('saved/portrait' + portraitNumber + '.png');
+    // });
   });
 }
