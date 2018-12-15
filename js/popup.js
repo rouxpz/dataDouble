@@ -1,13 +1,16 @@
 //translate collected data into image in popup.
 
 let updatePhoto = document.getElementById("updatePhoto");
-var links = 0;
-var newData;
+let links = 0;
+let newData;
+let topWords;
+let infoDiversity;
 
 updatePhoto.onclick = function() {
   chrome.runtime.sendMessage({
     msg: "send data to popup"
   });
+  links = 0;
 }
 
 chrome.runtime.onMessage.addListener(
@@ -18,11 +21,13 @@ chrome.runtime.onMessage.addListener(
             chrome.extension.getBackgroundPage().console.log(request.data);
 
             newData = request.data;
+            topWords = request.keys;
+            infoDiversity = request.linkNumber;
 
             var toPrint = '';
 
-            for (var i = 0; i < newData.length; i++) {
-              toPrint += newData[i][0] + ", " + newData[i][1] + "<br>";
+            for (var i = 0; i < words.length; i++) {
+              toPrint += words[i] + "; ";
             }
 
             document.getElementById("data").innerHTML = toPrint;
@@ -67,25 +72,27 @@ function mapRange(value, min, max, newMin, newMax) {
 //manipulate image here based on data from popup.js
 function updateImage() {
 
-  // for (var i = 0; i < newData.length; i++) {
-  //
-  // }
+  for (var i = 0; i < newData.length; i++) {
+    links += newData[i][1];
+  }
 
-  ed = mapRange(newData[0][1] + newData[4][1], 0, 10, 9, 8);
+  //calculating ratios and ranges
+  var outlierRatio = newData[6][1] / links;
+  var infoRatio = newData[4][1] / links;
+
+  var ed = mapRange(newData[2][1], 0, 100, 9, 8); //flip edge detection range
+  var pos = mapRange(newData[0][1] + newData[3][1], 0, 100, 100, 0); //flip posterization range
+  var out = mapRange(outlierRatio, 0, 1, 50, -50); //mapping ratio of outliers
+  var sat = mapRange(infoDiversity, 0, 10, -50, 50);
+
   Caman("#canvas", function() {
 
-    // this.crop(200, 300);
-    this.edgeDetect(ed);
-    this.posterize(newData[2][1]);
-    // this.brightness(links);
-    // this.contrast(links);
-    // this.gamma(links/100);
-    // this.render();
-    // this.resize({
-    //   width: 300,
-    //   height: 389
-    // });
-    // this.revert(false);
+    this.edgeDetect(ed); //social media
+    this.posterize(pos); //consumer and financial
+    this.saturation(sat); //diversity of news and information
+    this.exposure(out); // anomalies/outliers
+
+    this.revert(false);
     this.render();
   });
 }

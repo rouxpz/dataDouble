@@ -2,8 +2,9 @@
 
 let updatedData = [['commerce', 0], ['search', 0], ['social', 0], ['finance', 0], ['info', 0], ['adult', 0], ['confounder', 0]];
 let keyLog = '';
-var words = [];
-var topTen = [];
+let words = [];
+let topTen = [];
+let infoLinks = [];
 
 chrome.runtime.onInstalled.addListener(function() {
   chrome.storage.sync.set({updatedData: updatedData}, function() {
@@ -44,12 +45,22 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
     console.log(words);
     keyLog = '';
-  } else if (request.msg = "new email") { //including words from written emails
+  } else if (request.msg === "new email") { //including words from written emails
     emailData = request.data;
     emailData = emailData.replace('\n', ' ').replace('.', '').replace(',', '').replace('!', '').replace('?', '');
     emailWords = emailData.split(' ');
     for (var i = 0; i < emailWords.length; i++) {
       words.push(emailWords[i]);
+    }
+  } else if (request.msg === "info link update") {
+    newInfoLink = request.data;
+    // console.log(newInfoLink);
+    if (infoLinks.indexOf(newInfoLink) === -1) {
+      infoLinks.push(newInfoLink);
+      // console.log(infoLinks);
+      // console.log(infoLinks.length);
+    } else {
+      console.log("no new links");
     }
   } else if (request.msg === "new search") {
     newSearchData = request.data; //search logger
@@ -85,7 +96,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     chrome.runtime.sendMessage({
       msg: "here is the new data",
       data: updatedData,
-      keys: words
+      keys: words,
+      linkNumber: infoLinks.length
     });
     console.log("new data sent to popup");
   }

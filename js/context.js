@@ -12,7 +12,7 @@ window.onload = function() {
   for (var i = 0; i < categories.length; i++) {
     if (currentLocation.search(categories[i][0]) != -1) {
       console.log("Matches " + categories[i][1]);
-      matchCategories(categories[i][1]);
+      matchCategories(categories[i][1], categories[i][0]);
     }
   }
 }
@@ -35,7 +35,7 @@ function trackMouse() {
         if (this.href.search(categories[i][0]) != -1) {
           console.log(categories[i][0] + " matches!");
           console.log(categories[i][1]);
-          matchCategories(categories[1][1]);
+          matchCategories(categories[1][1], categories[i][0]);
         }
       }
     }
@@ -66,7 +66,7 @@ function trackKeys() {
   }
 }
 
-function matchCategories(long) {
+function matchCategories(long, url) {
   long = long.toLowerCase();
   toSend = '';
   if (long.search('shopping') != -1) {
@@ -78,6 +78,7 @@ function matchCategories(long) {
     toSend = 'finance';
   } else if (long.search("news") != -1 || long.search("entertainment") != -1 || long.search("media") != -1 || long.search("reference") != -1) {
     toSend = 'info';
+    linkDiversity(url);
   } else if (long.search("adult") != -1) {
     toSend = 'adult';
   } else if (long.search("search") != -1) {
@@ -92,19 +93,32 @@ function matchCategories(long) {
 
 }
 
+function linkDiversity(url) {
+  for (var i = 0; i < categories.length; i++) {
+    if (url.search(categories[i][0]) != -1) {
+      // console.log(url);
+      chrome.runtime.sendMessage({msg: 'info link update', data: url}, function(response) {
+        console.log("info link sent: " + url);
+      });
+    }
+  }
+}
+
 function getSearch() {
   var searchQuery = window.location.search;
-  searchQuery = searchQuery.substring(
-    searchQuery.indexOf("=") + 1,
-    searchQuery.indexOf("&")
-  );
-  searchQuery = searchQuery.replace(/\+/g, ' ');
-  query += searchQuery + ' ';
-  console.log(query);
+  if (searchQuery != '') {
+    searchQuery = searchQuery.substring(
+      searchQuery.indexOf("=") + 1,
+      searchQuery.indexOf("&")
+    );
+    searchQuery = searchQuery.replace(/\+/g, ' ');
+    query += searchQuery + ' ';
+    console.log(query);
 
-  chrome.runtime.sendMessage({msg: 'new search', data: query}, function(response) {
-    console.log("search data updated");
-  });
+    chrome.runtime.sendMessage({msg: 'new search', data: query}, function(response) {
+      console.log("search data updated");
+    });
+  }
 }
 
 function getGmailText() {
