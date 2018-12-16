@@ -26,7 +26,7 @@ chrome.runtime.onInstalled.addListener(function() {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.cmd == "update") { //categorization
+  if (request.cmd == "update") { //categorization of URLs visited
     newData = request.data;
     console.log("Data updated!");
 
@@ -37,7 +37,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         console.log(updatedData[i]);
       }
     }
-  } else if (request.msg == 'new keystrokes'){ //keystroke logger
+  } else if (request.msg == 'new keystrokes'){ //general keystroke logger
     newKeyData = request.keystrokes.replace('Enter', '\n').replace('Shift', '');
     keyLog += newKeyData;
     lines = keyLog.split('\n');
@@ -58,7 +58,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     for (var i = 0; i < emailWords.length; i++) {
       words.push(emailWords[i]);
     }
-  } else if (request.msg === "info link update") {
+  } else if (request.msg === "info link update") { //getting number of news and information sites
     newInfoLink = request.data;
     // console.log(newInfoLink);
     if (infoLinks.indexOf(newInfoLink) === -1) {
@@ -68,8 +68,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     } else {
       console.log("no new links");
     }
-  } else if (request.msg === "new search") {
-    newSearchData = request.data; //search logger
+  } else if (request.msg === "new search") { //search logger
+    newSearchData = request.data;
     newSearchData = newSearchData.split(' ');
 
     for (var i = 0; i < newSearchData.length; i++) {

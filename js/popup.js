@@ -13,6 +13,7 @@ let topWords;
 let infoDiversity;
 let portraitNumber;
 
+//request updated info from background script
 updatePhoto.onclick = function() {
   chrome.runtime.sendMessage({
     msg: "send data to popup"
@@ -20,10 +21,11 @@ updatePhoto.onclick = function() {
   links = 0;
 }
 
+//get data from background script
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.msg === "here is the new data") {
-            //  To do something
+
             chrome.extension.getBackgroundPage().console.log("SENT TO POPUP");
             chrome.extension.getBackgroundPage().console.log(request.data);
 
@@ -44,25 +46,22 @@ chrome.runtime.onMessage.addListener(
     }
 );
 
-// The adjust value is the argument given by the user when
-// they call this filter.
+//caman.js posterization filter
 Caman.Filter.register("posterize", function (adjust) {
   // Pre-calculate some values that will be used
   var numOfAreas = 256 / adjust;
   var numOfValues = 255 / (adjust - 1);
 
-  // Our process function that will be called for each pixel.
-  // Note that we pass the name of the filter as the first argument.
   this.process("posterize", function (rgba) {
     rgba.r = Math.floor(Math.floor(rgba.r / numOfAreas) * numOfValues);
     rgba.g = Math.floor(Math.floor(rgba.g / numOfAreas) * numOfValues);
     rgba.b = Math.floor(Math.floor(rgba.b / numOfAreas) * numOfValues);
 
-    // Return the modified RGB values
     return rgba;
   });
 });
 
+//caman.js edge detection filter
 Caman.Filter.register("edgeDetect", function(degree) {
     return this.processKernel("Edge Detect", [
       -1, -1, -1,
@@ -71,6 +70,8 @@ Caman.Filter.register("edgeDetect", function(degree) {
     ]);
 });
 
+// special thanks for help with this mapping function to the following thread:
+//https://stackoverflow.com/questions/48802987/is-there-a-map-function-in-vanilla-javascript-like-p5-js
 function mapRange(value, min, max, newMin, newMax) {
   prop = (value - min) / (max - min);
   newVal = newMin + prop * (newMax - newMin);
@@ -89,10 +90,11 @@ function updateImage() {
   var infoRatio = newData[4][1] / links;
 
   var ed = mapRange(newData[2][1], 0, 10, 9, 8); //flip edge detection range
-  var pos = mapRange(newData[0][1] + newData[3][1], 0, 5, 20, 2); //flip posterization range
+  var pos = mapRange(newData[0][1] + newData[3][1], 0, 5, 20, 2); //refine posterization range
   var out = mapRange(outlierRatio, 0, 1, 50, -50); //mapping ratio of outliers
-  var sat = mapRange(infoDiversity, 0, 10, -50, 50);
+  var sat = mapRange(infoDiversity, 0, 10, -50, 50); //mapping information diversity
 
+  //draw final image to popup canvas
   Caman("#canvas", function() {
 
     this.posterize(pos); //consumer and financial
