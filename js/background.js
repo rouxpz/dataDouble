@@ -13,7 +13,7 @@ let infoLinks = [];
 let totalPortraits = 0;
 
 chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.set({updatedData: updatedData}, function() {
+  chrome.storage.sync.set({data: updatedData, keys: [], linkNumber: 0, totalPortraits: 0}, function() {
     console.log("initial data refreshed");
   });
 
@@ -108,6 +108,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       totalPortraits: totalPortraits
     });
     console.log("new data sent to popup");
+
+    chrome.storage.sync.set({data: updatedData,
+      keys: sorted,
+      linkNumber: infoLinks.length,
+      totalPortraits: totalPortraits}, function() {
+      console.log("storage data refreshed");
+    });
+    
     totalPortraits += 1;
+
   }
 });
