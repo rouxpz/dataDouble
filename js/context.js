@@ -1,7 +1,7 @@
 //dataDouble
 //a project by roopa vasudevan
 //browser extension for chrome
-//special thanks to wendy chun and the members of the critical data studies course (f18) at upenn annenberg
+//special thanks to wendy chun, jessa lingel, and the members of the critical data studies (f18) and doing internet studies (s19) courses at upenn annenberg
 
 //code for interacting with user browsing activity.
 

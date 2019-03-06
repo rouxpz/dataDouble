@@ -1,11 +1,11 @@
 {
   "name": "dataDouble",
-  "version": "1.0",
-  "description": "Critical Data Studies Final F2018",
+  "version": "1.5",
+  "description": "dataDouble Browser Extension",
   "permissions": ["activeTab", "declarativeContent", "storage"],
   "background": {
       "scripts": ["js/background.js"],
-      "persistent": false
+      "persistent": true
     },
   "page_action": {
       "default_popup": "popup.html"

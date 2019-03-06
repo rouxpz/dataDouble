@@ -1,8 +1,8 @@
 //dataDouble
 //a project by roopa vasudevan
 //browser extension for chrome
+//special thanks to wendy chun, jessa lingel, and the members of the critical data studies (f18) and doing internet studies (s19) courses at upenn annenberg
 //utilizes caman.js (http://camanjs.com/) for image manipulation
-//special thanks to wendy chun and the members of the critical data studies course (f18) at upenn annenberg
 
 //this script translates collected data into the final image and info in the extension popup.
 
@@ -12,6 +12,16 @@ let newData;
 let topWords;
 let infoDiversity;
 let portraitNumber;
+let imageExists;
+let filename;
+
+document.body.onload = function() {
+  chrome.runtime.sendMessage({
+    msg: "get filename"
+  });
+  var image = document.getElementById('canvas');
+  // alert(image.src);
+}
 
 //request updated info from background script
 updatePhoto.onclick = function() {
@@ -24,7 +34,10 @@ updatePhoto.onclick = function() {
 //get data from background script
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request.msg === "here is the new data") {
+        if (request.msg == "sending filename") {
+          filename = request.photo;
+          uploadPhoto();
+        } else if (request.msg === "here is the new data") {
 
             chrome.extension.getBackgroundPage().console.log("SENT TO POPUP");
             chrome.extension.getBackgroundPage().console.log(request.data);
@@ -108,4 +121,28 @@ function updateImage() {
     //   this.save('saved/portrait' + portraitNumber + '.png');
     // });
   });
+}
+
+function uploadPhoto() {
+  if (filename.indexOf('.') == -1) {
+    // alert("photo needed");
+    document.getElementById('upload').style.display = "block";
+    document.getElementById('submit').onclick = function(evt) {
+      var file = document.getElementById('fileupload').files[0];
+      if (file) {
+        // alert(file.name);
+        document.getElementById('canvas').src = file.name;
+        chrome.runtime.sendMessage({
+          msg: "photo uploaded",
+          filename: file.name
+        });
+        document.getElementById('upload').style.display = "none";
+      } else {
+        alert("no file");
+      }
+    }
+  } else {
+    document.getElementById('canvas').src = "chrome-extension://" + chrome.runtime.id + "/img/" + filename;
+    document.getElementById('updatePhoto').style.display = "block";
+  }
 }

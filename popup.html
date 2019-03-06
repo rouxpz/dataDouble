@@ -14,9 +14,13 @@ special thanks to wendy chun and the members of the critical data studies course
 
 <body>
   <!-- <canvas id="canvas" width="300" height="389"> -->
-  <img id="canvas" src="img/test-photo-small.png" width="300" height="389" alt="">
+  <img id="canvas" src="" width="300" height="389" alt="">
   <!-- </canvas> -->
-  <button id="updatePhoto">update portrait</button><br>
+  <form id="upload" class = "hidden" enctype="multipart/form-data" method="post" action="#">
+    <input  type="file" id="fileupload" name="files[]" multiple />
+    <input type="submit" value="submit" id="submit" />
+  </form>
+  <button id="updatePhoto" class="hidden">update portrait</button><br>
   <span id="data"></span>
   <span id="keyLog"></span>
   <script type="text/javascript" src="js/popup.js"></script>

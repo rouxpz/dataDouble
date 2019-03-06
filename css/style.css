@@ -7,3 +7,7 @@ button {
   width: 100px;
   outline: none;
 }
+
+.hidden {
+  display: none;
+}

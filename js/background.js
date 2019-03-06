@@ -1,7 +1,7 @@
 //dataDouble
 //a project by roopa vasudevan
 //browser extension for chrome
-//special thanks to wendy chun and the members of the critical data studies course (f18) at upenn annenberg
+//special thanks to wendy chun, jessa lingel, and the members of the critical data studies (f18) and doing internet studies (s19) courses at upenn annenberg
 
 //background script running in the extension to collect context information and sort it to deliver to the popup.
 
@@ -11,10 +11,11 @@ let words = [];
 let topTen = [];
 let infoLinks = [];
 let totalPortraits = 0;
+let filename = '';
 
 chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.set({data: updatedData, keys: [], linkNumber: 0, totalPortraits: 0}, function() {
-    console.log("initial data refreshed");
+  chrome.storage.sync.set({photo: filename, data: updatedData, keys: [], linkNumber: 0, totalPortraits: 0}, function() {
+    console.log("initial data refreshed, filename: " + filename);
   });
 
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
@@ -109,14 +110,31 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     });
     console.log("new data sent to popup");
 
-    chrome.storage.sync.set({data: updatedData,
+    chrome.storage.sync.set({photo: filename,
+      data: updatedData,
       keys: sorted,
       linkNumber: infoLinks.length,
       totalPortraits: totalPortraits}, function() {
       console.log("storage data refreshed");
     });
-    
+
     totalPortraits += 1;
 
+  } else if (request.msg == "get filename") { //request file info to upload photo
+    console.log("filename requested");
+    chrome.runtime.sendMessage({
+      msg: "sending filename",
+      photo: filename
+    });
+  } else if (request.msg == "photo uploaded") {
+    filename = request.filename;
+    console.log("NEW PHOTO: " + filename);
+    chrome.storage.sync.set({photo: filename,
+      data: updatedData,
+      keys: sorted,
+      linkNumber: infoLinks.length,
+      totalPortraits: totalPortraits}, function() {
+      console.log("storage data refreshed");
+    });
   }
 });
