@@ -15,12 +15,26 @@ let portraitNumber;
 let imageExists;
 let filename;
 let photoData;
+let daysPassed;
 
 document.body.onload = function() {
+  var startTime = localStorage.getItem("begin");
+
+  if (startTime == null) {
+    var install = new Date().getTime();
+    localStorage.setItem("begin", install);
+    alert(install);
+  } else {
+    var now = new Date().getTime();
+    daysPassed = Math.floor((now - startTime)/(1000 * 60 * 60 * 24));
+    // alert(daysPassed);
+  }
+  // alert(lastDay);
+  // var day = getDate();
   chrome.runtime.sendMessage({
     msg: "get filename"
   });
-  var image = document.getElementById('canvas');
+  // var image = document.getElementById('canvas');
   // alert(image.src);
 }
 
@@ -94,7 +108,8 @@ function mapRange(value, min, max, newMin, newMax) {
 
 //manipulate image here based on data from popup.js
 function updateImage() {
-
+  document.getElementById("days").innerHTML += daysPassed;
+  
   for (var i = 0; i < newData.length; i++) {
     links += newData[i][1];
   }
