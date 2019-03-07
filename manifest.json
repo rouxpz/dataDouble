@@ -2,7 +2,7 @@
   "name": "dataDouble",
   "version": "1.5",
   "description": "dataDouble Browser Extension",
-  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "permissions": ["activeTab", "declarativeContent", "storage", "downloads"],
   "background": {
       "scripts": ["js/background.js"],
       "persistent": true

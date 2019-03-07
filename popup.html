@@ -13,16 +13,24 @@ special thanks to wendy chun and the members of the critical data studies course
 </head>
 
 <body>
-  <!-- <canvas id="canvas" width="300" height="389"> -->
-  <img id="canvas" src="" width="300" height="389" alt="">
-  <!-- </canvas> -->
-  <form id="upload" class = "hidden" enctype="multipart/form-data" method="post" action="#">
-    <input  type="file" id="fileupload" name="files[]" multiple />
-    <input type="submit" value="submit" id="submit" />
-  </form>
-  <button id="updatePhoto" class="hidden">update portrait</button><br>
-  <span id="data"></span>
-  <span id="keyLog"></span>
+  <img id="canvas" class = "hidden" src="file:///Users/roopanew/Desktop/test-photo-small.png" width="300" height="389" alt="uploaded image">
+  <canvas id="ctx" class = "hidden" width="300" height="389"></canvas>
+  <div id="initialPage">
+    <h1><em>Welcome to dataDouble.</em></h1>
+    <p>Before we begin, please upload a photograph of yourself.<br> The photo must be 300 pixels wide by 400 pixels high.</p>
+    <form id="upload" class = "hidden" enctype="multipart/form-data" method="post" action="#">
+      <input  type="file" id="fileupload" name="files[]" multiple />
+      <input type="submit" value="submit" id="submit" />
+    </form>
+  </div>
+  <div id="stats" class = "hidden">
+    <h1><em>dataDouble stats</em></h1>
+    <p><strong>Days since installation: </strong><span id="daysUsed"></span></p>
+    <p><strong>Total Sites Visited:</strong></p>
+    <p><strong>Site Categories:</strong></p>
+    <p><strong>Top 5 Keywords Used: </strong><span id="data"></span><span id="keyLog"></span></p>
+    <button id="updatePhoto" class="hidden">update portrait</button><br>
+  </div>
   <script type="text/javascript" src="js/popup.js"></script>
   <script type="text/javascript" src="js/image-manipulation.js"></script>
 </body>

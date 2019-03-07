@@ -14,6 +14,7 @@ let infoDiversity;
 let portraitNumber;
 let imageExists;
 let filename;
+let photoData;
 
 document.body.onload = function() {
   chrome.runtime.sendMessage({
@@ -25,10 +26,10 @@ document.body.onload = function() {
 
 //request updated info from background script
 updatePhoto.onclick = function() {
-  chrome.runtime.sendMessage({
-    msg: "send data to popup"
-  });
-  links = 0;
+  // chrome.runtime.sendMessage({
+  //   msg: "send data to popup"
+  // });
+  // links = 0;
 }
 
 //get data from background script
@@ -127,22 +128,42 @@ function uploadPhoto() {
   if (filename.indexOf('.') == -1) {
     // alert("photo needed");
     document.getElementById('upload').style.display = "block";
-    document.getElementById('submit').onclick = function(evt) {
+    document.getElementById('fileupload').onchange = function(evt) {
       var file = document.getElementById('fileupload').files[0];
       if (file) {
         // alert(file.name);
+        // document.getElementById('upload').submit();
         document.getElementById('canvas').src = file.name;
+        var c = document.getElementById("ctx");
+        var ctx = c.getContext("2d");
+        var toSave = document.getElementById("canvas");
+        // alert(toSave.src);
+        ctx.drawImage(toSave, 0, 0);
+        ctx.fillStyle = "rgba(125, 46, 138, 0.5)";
+        ctx.fillRect(25,25,150,100);
+        photoData = c.toDataURL("image/png");
+        localStorage.setItem("photo", photoData);
         chrome.runtime.sendMessage({
           msg: "photo uploaded",
           filename: file.name
         });
-        document.getElementById('upload').style.display = "none";
       } else {
         alert("no file");
       }
     }
   } else {
-    document.getElementById('canvas').src = "chrome-extension://" + chrome.runtime.id + "/img/" + filename;
-    document.getElementById('updatePhoto').style.display = "block";
+    // document.getElementById('upload').style.display = "none";
+    chrome.runtime.sendMessage({
+      msg: "send data to popup"
+    });
+    links = 0;
+    document.getElementById('initialPage').style.display = "none";
+    document.getElementById('stats').style.display = "block";
+    // document.getElementById('canvas').style.display = "block";
+    // document.getElementById('ctx').style.display = "none";
+    // var toRender = localStorage.getItem("photo");
+    // // alert(toRender);
+    // document.getElementById('canvas').src = toRender;
+    // document.getElementById('updatePhoto').style.display = "block";
   }
 }
