@@ -2,6 +2,10 @@
   "name": "dataDouble",
   "version": "1.5",
   "description": "dataDouble Browser Extension",
+  "icons": {
+    "48": "icons/dd-icon-48.png",
+    "96": "icons/dd-icon-96.png"
+  },
   "permissions": ["activeTab", "declarativeContent", "storage", "downloads"],
   "background": {
       "scripts": ["js/background.js"],

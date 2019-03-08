@@ -109,7 +109,7 @@ function mapRange(value, min, max, newMin, newMax) {
 //manipulate image here based on data from popup.js
 function updateImage() {
   document.getElementById("days").innerHTML += daysPassed;
-  
+
   for (var i = 0; i < newData.length; i++) {
     links += newData[i][1];
   }

@@ -1,5 +1,7 @@
 body {
   font-family: Arial;
+  width: 300px;
+  padding:5px;
 }
 
 button {
