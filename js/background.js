@@ -12,6 +12,8 @@ let topTen = [];
 let infoLinks = [];
 let totalPortraits = 0;
 let filename = '';
+let totalSites = 0;
+let allSites = {};
 
 chrome.runtime.onInstalled.addListener(function() {
   chrome.storage.sync.set({photo: filename, data: updatedData, keys: [], linkNumber: 0, totalPortraits: 0}, function() {
@@ -136,5 +138,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       totalPortraits: totalPortraits}, function() {
       console.log("storage data refreshed");
     });
+  } else if (request.msg == "site loaded") {
+    totalSites += 1;
+    urlToCheck = request.url;
+    // console.log(urlToCheck + " has been loaded.");
+    if (urlToCheck in allSites) {
+      // console.log("already here");
+      allSites[urlToCheck] += 1;
+    } else {
+      allSites[urlToCheck] = 1;
+    }
+    console.log(urlToCheck + " has been loaded " + allSites[urlToCheck] + " times. There have been " + totalSites + " sites visited.");
   }
 });

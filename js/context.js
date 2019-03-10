@@ -8,23 +8,34 @@
 var categories = [['google.com', 'Internet and Telecom > Search Engine'], ['facebook.com', 'Internet and Telecom > Social Network'], ['youtube.com', 'Arts and Entertainment > TV and Video'], ['amazon.com', 'Shopping > General Merchandise'], ['yahoo.com', 'News and Media'], ['pornhub.com', 'Adult'], ['xnxx.com', 'Adult'], ['xvideos.com', 'Adult'], ['ebay.com', 'Shopping > General Merchandise'], ['twitter.com', 'Internet and Telecom > Social Network'], ['wikipedia.org', 'Reference > Dictionaries and Encyclopedias'], ['instagram.com', 'Internet and Telecom > Social Network'], ['reddit.com', 'Internet and Telecom > Social Network'], ['bing.com', 'Internet and Telecom > Search Engine'], ['craigslist.org', 'Shopping > Classifieds'], ['live.com', 'Internet and Telecom > Email'], ['walmart.com', 'Shopping > General Merchandise'], ['xhamster.com', 'Adult'], ['netflix.com', 'Arts and Entertainment > TV and Video'], ['ampproject.org', 'Computer and Electronics > Software'], ['espn.com', 'News and Media > Sports News'], ['chase.com', 'Finance > Banking'], ['pinterest.com', 'Internet and Telecom > Social Network'], ['paypal.com', 'Finance > Financial Management'], ['tumblr.com', 'Internet and Telecom > Social Network'], ['cnn.com', 'News and Media'], ['linkedin.com', 'Internet and Telecom > Social Network'], ['msn.com', 'News and Media'], ['chaturbate.com', 'Adult'], ['indeed.com', 'Career and Education > Jobs and Employment'], ['office.com', 'Computer and Electronics > Software'], ['target.com', 'Shopping'], ['foxnews.com', 'News and Media'], ['imdb.com', 'Arts and Entertainment > Movies'], ['bestbuy.com', 'Shopping > Consumer Electronics'], ['zillow.com', 'Business and Industry > Real Estate'], ['accuweather.com', 'News and Media > Weather'], ['xfinity.com', 'Arts and Entertainment > TV and Video'], ['imgur.com', 'Internet and Telecom > File Sharing'], ['wellsfargo.com', 'Finance > Banking'], ['dailymail.co.uk', 'News and Media > Newspapers'], ['drudgereport.com', 'News and Media'], ['homedepot.com', 'Shopping > Home and Garden'], ['nytimes.com', 'News and Media > Newspapers'], ['bankofamerica.com', 'Finance > Banking'], ['yelp.com', 'Reference > Directories'], ['etsy.com', 'Shopping > General Merchandise'], ['microsoftonline.com', 'Computer and Electronics > Software'], ['duckduckgo.com', 'Internet and Telecom > Search Engine'], ['wikia.com', 'Arts and Entertainment > TV and Video'], ['stackoverflow.com', 'Internet and Telecom > Social Network'], ['github.com', 'Internet and Telecom > Social Network']];
 
 var query = '';
+var pattern = /:\/\/[^\/]*\//g;
 let currentLocation;
 let gmailText = '';
 let toSend = '';
+
 
 window.onload = function() {
   // console.log(window.location.href);
   getSearch();
   currentLocation = window.location.href;
-  console.log(currentLocation);
+  // console.log(currentLocation);
+  var matches = currentLocation.match(pattern);
+  // console.log(matches);
+  var urlToCheck = matches[0].replace("://", '').replace('/', '');
+  // console.log(urlToCheck);
+  chrome.runtime.sendMessage({
+    msg: "site loaded",
+    url: urlToCheck
+  });
+
   console.log(categories.length);
   for (var i = 0; i < categories.length; i++) {
     if (currentLocation.search(categories[i][0]) != -1) {
-      console.log("Matches " + categories[i][1]);
+      // console.log("Matches " + categories[i][1]);
       matchCategories(categories[i][1], categories[i][0]);
       break;
     } else if (i === 51 && currentLocation.search(categories[i][0]) === -1) {
-      console.log("confounder");
+      // console.log("confounder");
       matchCategories("confounder", categories[i][0]);
     }
   }
