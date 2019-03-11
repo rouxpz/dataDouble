@@ -108,7 +108,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       data: updatedData,
       keys: sorted,
       linkNumber: infoLinks.length,
-      totalPortraits: totalPortraits
+      totalPortraits: totalPortraits,
+      total: totalSites
     });
     console.log("new data sent to popup");
 
@@ -148,6 +149,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     } else {
       allSites[urlToCheck] = 1;
     }
+
+    chrome.runtime.sendMessage({
+      msg: "sending new site data",
+      total: totalSites
+    });
+
+    console.log("new site data to popup");
     console.log(urlToCheck + " has been loaded " + allSites[urlToCheck] + " times. There have been " + totalSites + " sites visited.");
   }
 });

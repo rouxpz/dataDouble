@@ -16,6 +16,7 @@ let imageExists;
 let filename;
 let photoData;
 let daysPassed;
+let totalURLs;
 
 document.body.onload = function() {
   var startTime = localStorage.getItem("begin");
@@ -27,23 +28,12 @@ document.body.onload = function() {
   } else {
     var now = new Date().getTime();
     daysPassed = Math.floor((now - startTime)/(1000 * 60 * 60 * 24));
-    // alert(daysPassed);
   }
-  // alert(lastDay);
-  // var day = getDate();
   chrome.runtime.sendMessage({
     msg: "get filename"
   });
   // var image = document.getElementById('canvas');
   // alert(image.src);
-}
-
-//request updated info from background script
-updatePhoto.onclick = function() {
-  // chrome.runtime.sendMessage({
-  //   msg: "send data to popup"
-  // });
-  // links = 0;
 }
 
 //get data from background script
@@ -61,6 +51,7 @@ chrome.runtime.onMessage.addListener(
             topWords = request.keys;
             infoDiversity = request.linkNumber;
             portraitNumber = request.totalPortraits;
+            totalURLs = request.total;
 
             var toPrint = '';
 
@@ -69,6 +60,7 @@ chrome.runtime.onMessage.addListener(
             }
 
             document.getElementById("data").innerHTML = toPrint;
+            document.getElementById("totalSites").innerHTML += totalURLs;
             updateImage();
         }
     }
@@ -174,6 +166,22 @@ function uploadPhoto() {
     links = 0;
     document.getElementById('initialPage').style.display = "none";
     document.getElementById('stats').style.display = "block";
+
+    var c = document.getElementById("ctx");
+    var ctx = c.getContext("2d");
+    ctx.fillStyle = "blue";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // var dlImg = canvas.toDataURL("image/png");
+
+    if (daysPassed >= 3) {
+      document.getElementById('toDL').style.display = "block";
+    }
+    var c = document.getElementById("ctx");
+    var ctx = c.getContext("2d");
+    ctx.fillStyle = "blue";
+    ctx.fillRect(0, 0, c.width, c.height);
+    // var testImg = c.toDataURL("image/png")
+    // document.body.innerHTML += '<img src="'+testImg+'"/>';
     // document.getElementById('canvas').style.display = "block";
     // document.getElementById('ctx').style.display = "none";
     // var toRender = localStorage.getItem("photo");
@@ -181,4 +189,13 @@ function uploadPhoto() {
     // document.getElementById('canvas').src = toRender;
     // document.getElementById('updatePhoto').style.display = "block";
   }
+}
+
+//download final portrait -- only visible after 14 days have passed
+downloadPhoto.onclick = function() {
+  var c = document.getElementById("ctx");
+  var download = document.getElementById("toDL");
+  var dlImg = c.toDataURL("image/png").replace("image/png", "image/octet-stream");
+  download.setAttribute("href", dlImg);
+
 }
