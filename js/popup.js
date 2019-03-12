@@ -125,10 +125,23 @@ function updateImage() {
 
     this.revert(false);
     this.render();
-    // this.render(function() {
-    //   this.save('saved/portrait' + portraitNumber + '.png');
-    // });
+
+    var c = document.getElementById("canvas");
+    c.style.display = "block";
+
+    // alert(document.getElementById("canvas").src);
+    if (daysPassed >= 3) {
+      var download = document.getElementById("toDL");
+      download.style.display = "block";
+
+      //download final portrait -- only visible after 14 days have passed
+      download.onclick = function() {
+        var dlImg = c.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        download.setAttribute("href", dlImg);
+      }
+    }
   });
+
 }
 
 function uploadPhoto() {
@@ -138,25 +151,26 @@ function uploadPhoto() {
     document.getElementById('fileupload').onchange = function(evt) {
       var file = document.getElementById('fileupload').files[0];
       if (file) {
-        // alert(file.name);
-        // document.getElementById('upload').submit();
-        document.getElementById('canvas').src = file.name;
-        var c = document.getElementById("ctx");
-        var ctx = c.getContext("2d");
-        var toSave = document.getElementById("canvas");
-        // alert(toSave.src);
-        ctx.drawImage(toSave, 0, 0);
-        ctx.fillStyle = "rgba(125, 46, 138, 0.5)";
-        ctx.fillRect(25,25,150,100);
-        photoData = c.toDataURL("image/png");
-        localStorage.setItem("photo", photoData);
+
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          var du = reader.result;
+          // alert(du);
+          document.getElementById("canvas").src = du;
+          document.getElementById("canvas").style.display = "block";
+          window.localStorage.setItem("photoURL", String(du));
+        };
+
+        reader.readAsDataURL(file);
+
         chrome.runtime.sendMessage({
-          msg: "photo uploaded",
-          filename: file.name
-        });
-      } else {
-        alert("no file");
-      }
+            msg: "photo uploaded",
+            filename: file.name
+          });
+        } else {
+          alert("no file");
+        }
     }
   } else {
     // document.getElementById('upload').style.display = "none";
@@ -167,35 +181,18 @@ function uploadPhoto() {
     document.getElementById('initialPage').style.display = "none";
     document.getElementById('stats').style.display = "block";
 
-    var c = document.getElementById("ctx");
-    var ctx = c.getContext("2d");
-    ctx.fillStyle = "blue";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // var dlImg = canvas.toDataURL("image/png");
 
-    if (daysPassed >= 3) {
-      document.getElementById('toDL').style.display = "block";
+    var ls = window.localStorage.getItem("photoURL");
+    var img = document.getElementById("canvas");
+    img.src = ls;
+    // alert(document.getElementById("canvas").src);
+
+    var c = document.getElementById("ctx");
+    var x = c.getContext("2d");
+    img.onload = function() {
+      x.drawImage(img, 0, 0);
     }
-    var c = document.getElementById("ctx");
-    var ctx = c.getContext("2d");
-    ctx.fillStyle = "blue";
-    ctx.fillRect(0, 0, c.width, c.height);
-    // var testImg = c.toDataURL("image/png")
-    // document.body.innerHTML += '<img src="'+testImg+'"/>';
-    // document.getElementById('canvas').style.display = "block";
-    // document.getElementById('ctx').style.display = "none";
-    // var toRender = localStorage.getItem("photo");
-    // // alert(toRender);
-    // document.getElementById('canvas').src = toRender;
-    // document.getElementById('updatePhoto').style.display = "block";
+    // c.style.display = "block";
+
   }
-}
-
-//download final portrait -- only visible after 14 days have passed
-downloadPhoto.onclick = function() {
-  var c = document.getElementById("ctx");
-  var download = document.getElementById("toDL");
-  var dlImg = c.toDataURL("image/png").replace("image/png", "image/octet-stream");
-  download.setAttribute("href", dlImg);
-
 }
