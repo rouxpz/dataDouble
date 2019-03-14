@@ -1,0 +1,43 @@
+<!-- dataDouble
+a project by roopa vasudevan
+browser extension for chrome
+special thanks to wendy chun, jessa lingel, and the members of the critical data studies (f18) and doing internet studies (s19) courses at upenn annenberg -->
+
+<!-- HTML file for extension popup. -->
+
+<!DOCTYPE html>
+<head>
+  <title>dataDouble</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="text/javascript" src="js/caman.full.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:300,600" rel="stylesheet">
+</head>
+
+<body>
+  <img id="canvas" class = "hidden" src="" width="300" height="389" alt="uploaded image">
+  <canvas id="ctx" class = "hidden" width="300" height="389"></canvas>
+  <div id="initialPage">
+    <h1><em>Welcome to dataDouble.</em></h1>
+    <p>Before we begin, please upload a photograph of yourself.<br> The photo must be 300 pixels wide by 400 pixels high.</p>
+    <form id="upload" class = "hidden" enctype="multipart/form-data" method="post" action="#">
+      <input  type="file" id="fileupload" name="files[]" multiple />
+      <input type="submit" value="submit" id="submit" />
+    </form>
+  </div>
+  <div id="stats" class = "hidden">
+    <h1><em>dataDouble stats</em></h1>
+    <p id="days"><strong>Days since installation: </strong><span id="daysUsed"></span></p>
+    <p id="sites"><strong>Total Sites Visited: </strong><span id="totalSites"></span></p>
+    <p id="unique"><strong>Total Unique Domains Visited: </strong><span id="domains"></span></p>
+    <p id="cats"><strong>Top Categories:</strong></p>
+    <p><strong>Top 5 Keywords Used: </strong><span id="data"></span><span id="keyLog"></span></p>
+    <a id="toDL" download = "portrait.png" class="hidden">
+      <button id="downloadPhoto">download portrait</button>
+    </a>
+    <br>
+  </div>
+
+
+    <script type="text/javascript" src="js/popup.js"></script>
+    <script type="text/javascript" src="js/image-manipulation.js"></script>
+</body>

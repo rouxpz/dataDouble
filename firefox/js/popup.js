@@ -17,6 +17,7 @@ let filename;
 let photoData;
 let daysPassed;
 let totalURLs;
+let uniqueDomains;
 
 document.body.onload = function() {
   var startTime = localStorage.getItem("begin");
@@ -52,6 +53,7 @@ chrome.runtime.onMessage.addListener(
             infoDiversity = request.linkNumber;
             portraitNumber = request.totalPortraits;
             totalURLs = request.total;
+            uniqueDomains = request.unique;
 
             var toPrint = '';
 
@@ -61,6 +63,7 @@ chrome.runtime.onMessage.addListener(
 
             document.getElementById("data").innerHTML = toPrint;
             document.getElementById("totalSites").innerHTML += totalURLs;
+            document.getElementById("domains").innerHTML += uniqueDomains;
             updateImage();
         }
     }
@@ -109,9 +112,11 @@ function updateImage() {
   //calculating ratios and ranges
   var outlierRatio = newData[6][1] / links;
   var infoRatio = newData[4][1] / links;
+  var socialRatio = newData[2][1] / links;
+  var moneyRatio = newData[0][1] + newData[3][1] / links;
 
-  var ed = mapRange(newData[2][1], 0, 10, 9, 8); //flip edge detection range
-  var pos = mapRange(newData[0][1] + newData[3][1], 0, 5, 20, 2); //refine posterization range
+  var ed = mapRange(socialRatio, 0, 1, 8, 9); //flip edge detection range
+  var pos = mapRange(moneyRatio, 0, 1, 5, 2); //refine posterization range
   var out = mapRange(outlierRatio, 0, 1, 50, -50); //mapping ratio of outliers
   var sat = mapRange(infoDiversity, 0, 10, -50, 50); //mapping information diversity
 
@@ -127,10 +132,10 @@ function updateImage() {
     this.render();
 
     var c = document.getElementById("canvas");
-    c.style.display = "block";
+    // c.style.display = "block";
 
     // alert(document.getElementById("canvas").src);
-    if (daysPassed >= 3) {
+    if (daysPassed >= 0) {
       var download = document.getElementById("toDL");
       download.style.display = "block";
 
@@ -158,7 +163,7 @@ function uploadPhoto() {
           var du = reader.result;
           // alert(du);
           document.getElementById("canvas").src = du;
-          document.getElementById("canvas").style.display = "block";
+          // document.getElementById("canvas").style.display = "block";
           window.localStorage.setItem("photoURL", String(du));
         };
 

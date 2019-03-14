@@ -1,0 +1,38 @@
+body {
+  font-family: 'Libre Franklin', sans-serif;
+  width: 300px;
+  padding:5px;
+}
+
+h1 {
+  margin:0px;
+}
+
+button {
+  cursor: pointer;
+  font-family: 'Libre Franklin', sans-serif;
+  color: #bbd7eb;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  float:right;
+  background-color: #1d7bbe;
+  height: 30px;
+  width: 120px;
+  outline: none;
+  border-color: #13507c;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+button:hover {
+  background-color: #13507c;
+}
+
+.hidden {
+  display: none;
+}
+
+strong {
+  font-weight: 600;
+}

@@ -1,6 +1,6 @@
 <!-- dataDouble
 a project by roopa vasudevan
-browser extension for chrome
+browser extension for firefox
 special thanks to wendy chun, jessa lingel, and the members of the critical data studies (f18) and doing internet studies (s19) courses at upenn annenberg -->
 
 <!-- HTML file for extension popup. -->
@@ -10,6 +10,7 @@ special thanks to wendy chun, jessa lingel, and the members of the critical data
   <title>dataDouble</title>
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <script type="text/javascript" src="js/caman.full.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:300,600" rel="stylesheet">
 </head>
 
 <body>
@@ -27,7 +28,8 @@ special thanks to wendy chun, jessa lingel, and the members of the critical data
     <h1><em>dataDouble stats</em></h1>
     <p id="days"><strong>Days since installation: </strong><span id="daysUsed"></span></p>
     <p id="sites"><strong>Total Sites Visited: </strong><span id="totalSites"></span></p>
-    <p id="cats"><strong>Top Site Categories:</strong></p>
+    <p id="unique"><strong>Total Unique Domains Visited: </strong><span id="domains"></span></p>
+    <p id="cats"><strong>Top Categories:</strong></p>
     <p><strong>Top 5 Keywords Used: </strong><span id="data"></span><span id="keyLog"></span></p>
     <a id="toDL" download = "portrait.png" class="hidden">
       <button id="downloadPhoto">download portrait</button>

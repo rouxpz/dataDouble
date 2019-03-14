@@ -113,7 +113,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       keys: sorted,
       linkNumber: infoLinks.length,
       totalPortraits: totalPortraits,
-      total: totalSites
+      total: totalSites,
+      unique: Object.keys(allSites).length
     });
     console.log("new data sent to popup");
 
