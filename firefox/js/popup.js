@@ -140,7 +140,7 @@ function updateImage() {
   var searchRatio = newData[1][1] / links;
 
   var ed = mapRange(socialRatio, 0, 1, 9, 8); //flip edge detection range
-  var pos = mapRange(moneyRatio, 0, 1, 15, 2); //refine posterization range
+  var pos = mapRange(moneyRatio, 0, 1, 10, 2); //refine posterization range
   var con = mapRange(searchRatio, 0, 1, 0, 10); //mapping exposure
   var sat = mapRange(infoDiversity, 0, 10, -50, 50); //mapping information diversity
   var gam = mapRange(adultRadio, 0, 1, 1, 3); //mapping gamma
