@@ -18,6 +18,7 @@ let photoData;
 let daysPassed;
 let totalURLs;
 let uniqueDomains;
+let sortedData = [];
 
 document.body.onload = function() {
   var startTime = localStorage.getItem("begin");
@@ -25,7 +26,7 @@ document.body.onload = function() {
   if (startTime == null) {
     var install = new Date().getTime();
     localStorage.setItem("begin", install);
-    alert(install);
+    // alert(install);
   } else {
     var now = new Date().getTime();
     daysPassed = Math.floor((now - startTime)/(1000 * 60 * 60 * 24));
@@ -58,12 +59,33 @@ chrome.runtime.onMessage.addListener(
             var toPrint = '';
 
             for (var i = 0; i < topWords.length; i++) {
-              toPrint += topWords[i] + "; ";
+              if (topWords[i] != null) {
+                toPrint += topWords[i][0] + ', ' + topWords[i][1] + " | ";
+              }
+            }
+
+            for (var i = 0; i < newData.length; i++) {
+              if (newData[i][1] != 0) {
+                sortedData.push({
+                  cat: newData[i][0],
+                  value: newData[i][1]
+                });
+              }
+            }
+
+            //sort top categories
+            var topCats = '';
+            sortedData.sort(function(a, b){return b.value - a.value});
+            for (var i = 0; i < sortedData.length; i++) {
+              if (i <= 3) {
+                topCats += sortedData[i].cat + " | ";
+              }
             }
 
             document.getElementById("data").innerHTML = toPrint;
             document.getElementById("totalSites").innerHTML += totalURLs;
             document.getElementById("domains").innerHTML += uniqueDomains;
+            document.getElementById("cats").innerHTML += topCats;
             updateImage();
         }
     }

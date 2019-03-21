@@ -1,6 +1,6 @@
 {
   "name": "dataDouble",
-  "version": "1.5",
+  "version": "1.0",
   "description": "dataDouble Browser Extension",
   "icons": {
     "48": "icons/dd-icon-48.png",
