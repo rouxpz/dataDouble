@@ -19,7 +19,7 @@ let allSites = {};
 
 chrome.runtime.onInstalled.addListener(function() {
   chrome.storage.sync.set({photo: filename, data: updatedData, keys: [], linkNumber: 0, totalPortraits: 0}, function() {
-    console.log("initial data refreshed, filename: " + filename);
+    // console.log("initial data refreshed, filename: " + filename);
   });
 
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
@@ -33,17 +33,17 @@ chrome.runtime.onInstalled.addListener(function() {
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.cmd == "update") { //categorization of URLs visited
     newData = request.data;
-    console.log("Data updated!");
+    // console.log("Data updated!");
 
     for (var i = 0; i < updatedData.length; i++) {
       if (newData.search(updatedData[i][0]) != -1) {
-        console.log(updatedData[i][0] + " matches!");
+        // console.log(updatedData[i][0] + " matches!");
         updatedData[i][1] += 1;
-        console.log(updatedData[i]);
+        // console.log(updatedData[i]);
       }
     }
   } else if (request.msg == 'new keystrokes'){ //general keystroke logger
-    newKeyData = request.keystrokes.replace('Enter', '\n').replace('Shift', '');
+    newKeyData = request.keystrokes.replace('Enter', '\n').replace('Shift', '').replace('Backspace', '');
     keyLog += newKeyData;
     lines = keyLog.split('\n');
     for (var i = 0; i < lines.length; i++) {
@@ -54,7 +54,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         }
       }
     }
-    console.log(words);
+    // console.log(words);
     keyLog = '';
   } else if (request.msg === "new email") { //including words from written emails
     emailData = request.data;
@@ -73,7 +73,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       // console.log(infoLinks);
       // console.log(infoLinks.length);
     } else {
-      console.log("no new links");
+      console.log("");
     }
   } else if (request.msg === "new search") { //search logger
     newSearchData = request.data;
@@ -84,7 +84,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         words.push(newSearchData[i]);
       }
     }
-    console.log(words);
+    // console.log(words);
   } else if (request.msg === "send data to popup") { //send everything to popup
     //get top 10 keywords to send to popup
     var sorted = [];
@@ -103,8 +103,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     });
 
     sorted.length = 5;
-    console.log(sorted);
-    console.log("Info Diversity: " + infoLinks.length);
+    // console.log(sorted);
+    // console.log("Info Diversity: " + infoLinks.length);
 
     //send everything to popup
     chrome.runtime.sendMessage({
@@ -116,7 +116,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       total: totalSites,
       unique: Object.keys(allSites).length
     });
-    console.log(updatedData);
+    // console.log(updatedData);
 
     chrome.storage.sync.set({photo: filename,
       data: updatedData,
@@ -129,14 +129,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     totalPortraits += 1;
 
   } else if (request.msg == "get filename") { //request file info to upload photo
-    console.log("filename requested");
+    // console.log("filename requested");
     chrome.runtime.sendMessage({
       msg: "sending filename",
       photo: filename
     });
   } else if (request.msg == "photo uploaded") {
     filename = request.filename;
-    console.log("NEW PHOTO: " + filename);
+    // console.log("NEW PHOTO: " + filename);
     chrome.storage.sync.set({photo: filename,
       data: updatedData,
       keys: sorted,
@@ -160,7 +160,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       total: totalSites
     });
 
-    console.log("new site data to popup");
-    console.log(urlToCheck + " has been loaded " + allSites[urlToCheck] + " times. There have been " + totalSites + " sites visited.");
+    // console.log("new site data to popup");
+    // console.log(urlToCheck + " has been loaded " + allSites[urlToCheck] + " times. There have been " + totalSites + " sites visited.");
   }
 });
