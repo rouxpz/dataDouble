@@ -1,6 +1,6 @@
 body {
   font-family: 'Libre Franklin', sans-serif;
-  width: 300px;
+  /* width: 300px; */
   padding:5px;
 }
 
@@ -18,7 +18,8 @@ button {
   float:right;
   background-color: #1d7bbe;
   height: 30px;
-  width: 120px;
+  width: 130px;
+  text-align: center;
   outline: none;
   border-color: #13507c;
   border-radius: 3px;

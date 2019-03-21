@@ -116,7 +116,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       total: totalSites,
       unique: Object.keys(allSites).length
     });
-    console.log("new data sent to popup");
+    console.log(updatedData);
 
     chrome.storage.sync.set({photo: filename,
       data: updatedData,

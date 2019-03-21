@@ -113,20 +113,26 @@ function updateImage() {
   var outlierRatio = newData[6][1] / links;
   var infoRatio = newData[4][1] / links;
   var socialRatio = newData[2][1] / links;
-  var moneyRatio = newData[0][1] + newData[3][1] / links;
+  var moneyRatio = (newData[0][1] + newData[3][1]) / links;
+  var adultRadio = newData[5][1] / links;
+  var searchRatio = newData[1][1] / links;
 
-  var ed = mapRange(socialRatio, 0, 1, 8, 9); //flip edge detection range
-  var pos = mapRange(moneyRatio, 0, 1, 5, 2); //refine posterization range
-  var out = mapRange(outlierRatio, 0, 1, 50, -50); //mapping ratio of outliers
+  var ed = mapRange(socialRatio, 0, 1, 9, 8); //flip edge detection range
+  var pos = mapRange(moneyRatio, 0, 1, 15, 2); //refine posterization range
+  var con = mapRange(searchRatio, 0, 1, 0, 10); //mapping exposure
   var sat = mapRange(infoDiversity, 0, 10, -50, 50); //mapping information diversity
+  var gam = mapRange(adultRadio, 0, 1, 1, 3); //mapping gamma
+  var noise = mapRange(outlierRatio, 0, 1, 0, 30); //mapping noise
 
   //draw final image to popup canvas
   Caman("#canvas", function() {
 
+    this.contrast(con); // searches
     this.posterize(pos); //consumer and financial
     this.edgeDetect(ed); //social media
     this.saturation(sat); //diversity of news and information
-    this.exposure(out); // anomalies/outliers
+    this.gamma(gam); //adult websites
+    this.noise(noise); //anomalies/outliers
 
     this.revert(false);
     this.render();
@@ -135,7 +141,7 @@ function updateImage() {
     // c.style.display = "block";
 
     // alert(document.getElementById("canvas").src);
-    if (daysPassed >= 0) {
+    if (daysPassed === 7 || daysPassed >= 14) {
       var download = document.getElementById("toDL");
       download.style.display = "block";
 
