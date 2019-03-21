@@ -137,13 +137,13 @@ function linkDiversity(url) {
 function getSearch() {
   var searchQuery = window.location.search;
   if (searchQuery != '') {
+    // console.log(searchQuery.indexOf('&q='));
     searchQuery = searchQuery.substring(
-      searchQuery.indexOf("q=") + 1,
-      searchQuery.indexOf("&")
+      searchQuery.indexOf('&q='), searchQuery.length
     );
-    searchQuery = searchQuery.replace(/\+/g, ' ');
+    searchQuery = searchQuery.replace(/\+/g, ' ').replace('&q=', '');
     query += searchQuery + ' ';
-    console.log(query);
+    // console.log(query);
 
     chrome.runtime.sendMessage({msg: 'new search', data: query}, function(response) {
       console.log("search data updated");
