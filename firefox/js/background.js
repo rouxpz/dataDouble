@@ -1,6 +1,6 @@
 //dataDouble
 //a project by roopa vasudevan
-//browser extension for chrome
+//browser extension for firefox
 //special thanks to wendy chun, jessa lingel, and the members of the critical data studies (f18) and doing internet studies (s19) courses at upenn annenberg
 
 //background script running in the extension to collect context information and sort it to deliver to the popup.
@@ -17,20 +17,20 @@ let filename = '';
 let totalSites = 0;
 let allSites = {};
 
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.set({photo: filename, data: updatedData, keys: [], linkNumber: 0, totalPortraits: 0}, function() {
+browser.runtime.onInstalled.addListener(function() {
+  browser.storage.sync.set({photo: filename, data: updatedData, keys: [], linkNumber: 0, totalPortraits: 0}, function() {
     // console.log("initial data refreshed, filename: " + filename);
   });
 
-  // chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-  //   chrome.declarativeContent.onPageChanged.addRules([{
-  //     conditions: [new chrome.declarativeContent.PageStateMatcher({})],
-  //     actions: [new chrome.declarativeContent.ShowPageAction()]
+  // browser.declarativeContent.onPageChanged.removeRules(undefined, function() {
+  //   browser.declarativeContent.onPageChanged.addRules([{
+  //     conditions: [new browser.declarativeContent.PageStateMatcher({})],
+  //     actions: [new browser.declarativeContent.ShowPageAction()]
   //   }]);
   // });
 });
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.cmd == "update") { //categorization of URLs visited
     newData = request.data;
     // console.log("Data updated!");
@@ -107,7 +107,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // console.log("Info Diversity: " + infoLinks.length);
 
     //send everything to popup
-    chrome.runtime.sendMessage({
+    browser.runtime.sendMessage({
       msg: "here is the new data",
       data: updatedData,
       keys: sorted,
@@ -118,7 +118,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     });
     // console.log("new data sent to popup");
 
-    chrome.storage.sync.set({photo: filename,
+    browser.storage.sync.set({photo: filename,
       data: updatedData,
       keys: sorted,
       linkNumber: infoLinks.length,
@@ -130,14 +130,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
   } else if (request.msg == "get filename") { //request file info to upload photo
     // console.log("filename requested");
-    chrome.runtime.sendMessage({
+    browser.runtime.sendMessage({
       msg: "sending filename",
       photo: filename
     });
   } else if (request.msg == "photo uploaded") {
     filename = request.filename;
     // console.log("NEW PHOTO: " + filename);
-    chrome.storage.sync.set({photo: filename,
+    browser.storage.sync.set({photo: filename,
       data: updatedData,
       keys: sorted,
       linkNumber: infoLinks.length,
@@ -155,7 +155,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       allSites[urlToCheck] = 1;
     }
 
-    chrome.runtime.sendMessage({
+    browser.runtime.sendMessage({
       msg: "sending new site data",
       total: totalSites
     });

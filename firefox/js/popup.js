@@ -1,6 +1,6 @@
 //dataDouble
 //a project by roopa vasudevan
-//browser extension for chrome
+//browser extension for firefox
 //special thanks to wendy chun, jessa lingel, and the members of the critical data studies (f18) and doing internet studies (s19) courses at upenn annenberg
 //utilizes caman.js (http://camanjs.com/) for image manipulation
 
@@ -31,7 +31,7 @@ document.body.onload = function() {
     var now = new Date().getTime();
     daysPassed = Math.floor((now - startTime)/(1000 * 60 * 60 * 24));
   }
-  chrome.runtime.sendMessage({
+  browser.runtime.sendMessage({
     msg: "get filename"
   });
   // var image = document.getElementById('canvas');
@@ -39,15 +39,15 @@ document.body.onload = function() {
 }
 
 //get data from background script
-chrome.runtime.onMessage.addListener(
+browser.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.msg == "sending filename") {
           filename = request.photo;
           uploadPhoto();
         } else if (request.msg === "here is the new data") {
 
-            chrome.extension.getBackgroundPage().console.log("SENT TO POPUP");
-            chrome.extension.getBackgroundPage().console.log(request.data);
+            browser.extension.getBackgroundPage().console.log("SENT TO POPUP");
+            browser.extension.getBackgroundPage().console.log(request.data);
 
             newData = request.data;
             topWords = request.keys;
@@ -77,7 +77,7 @@ chrome.runtime.onMessage.addListener(
             var topCats = '';
             sortedData.sort(function(a, b){return b.value - a.value});
             for (var i = 0; i < sortedData.length; i++) {
-              if (i <= 3) {
+              if (i <= 2) {
                 topCats += sortedData[i].cat + " | ";
               }
             }
@@ -197,7 +197,7 @@ function uploadPhoto() {
 
         reader.readAsDataURL(file);
 
-        chrome.runtime.sendMessage({
+        browser.runtime.sendMessage({
             msg: "photo uploaded",
             filename: file.name
           });
@@ -207,7 +207,7 @@ function uploadPhoto() {
     }
   } else {
     // document.getElementById('upload').style.display = "none";
-    chrome.runtime.sendMessage({
+    browser.runtime.sendMessage({
       msg: "send data to popup"
     });
     links = 0;

@@ -1,11 +1,11 @@
 //dataDouble
 //a project by roopa vasudevan
-//browser extension for chrome
+//browser extension for firefox
 //special thanks to wendy chun, jessa lingel, and the members of the critical data studies (f18) and doing internet studies (s19) courses at upenn annenberg
 
 //code for interacting with user browsing activity.
 
-var categories = [['google.com', 'Internet and Telecom > Search Engine'], ['facebook.com', 'Internet and Telecom > Social Network'], ['youtube.com', 'Arts and Entertainment > TV and Video'], ['amazon.com', 'Shopping > General Merchandise'], ['yahoo.com', 'News and Media'], ['pornhub.com', 'Adult'], ['xnxx.com', 'Adult'], ['xvideos.com', 'Adult'], ['ebay.com', 'Shopping > General Merchandise'], ['twitter.com', 'Internet and Telecom > Social Network'], ['wikipedia.org', 'Reference > Dictionaries and Encyclopedias'], ['instagram.com', 'Internet and Telecom > Social Network'], ['reddit.com', 'Internet and Telecom > Social Network'], ['bing.com', 'Internet and Telecom > Search Engine'], ['craigslist.org', 'Shopping > Classifieds'], ['live.com', 'Internet and Telecom > Email'], ['walmart.com', 'Shopping > General Merchandise'], ['xhamster.com', 'Adult'], ['netflix.com', 'Arts and Entertainment > TV and Video'], ['ampproject.org', 'Computer and Electronics > Software'], ['espn.com', 'News and Media > Sports News'], ['chase.com', 'Finance > Banking'], ['citibank.com', 'Finance > Banking'], ['tdbank.com', 'Finance > Banking'], ['hsbc.com', 'Finance > Banking'], ['vanguard.com', 'Finance > Banking'], ['capitalone.com', 'Finance > Banking'], ['pinterest.com', 'Internet and Telecom > Social Network'], ['americanexpress.com', 'Finance > Banking'], ['discover.com', 'Finance > Banking'], ['paypal.com', 'Finance > Financial Management'], ['tumblr.com', 'Internet and Telecom > Social Network'], ['cnn.com', 'News and Media'], ['linkedin.com', 'Internet and Telecom > Social Network'], ['msn.com', 'News and Media'], ['chaturbate.com', 'Adult'], ['indeed.com', 'Career and Education > Jobs and Employment'], ['office.com', 'Computer and Electronics > Software'], ['target.com', 'Shopping'], ['foxnews.com', 'News and Media'], ['imdb.com', 'Arts and Entertainment > Movies'], ['bestbuy.com', 'Shopping > Consumer Electronics'], ['zillow.com', 'Finance > Real Estate'], ['accuweather.com', 'News and Media > Weather'], ['pncbank.com', 'Finance > Banking'], ['xfinity.com', 'Arts and Entertainment > TV and Video'], ['imgur.com', 'Internet and Telecom > File Sharing'], ['wellsfargo.com', 'Finance > Banking'], ['venmo.com', 'Finance > Financial Management'], ['dailymail.co.uk', 'News and Media > Newspapers'], ['drudgereport.com', 'News and Media'], ['homedepot.com', 'Shopping > Home and Garden'], ['nytimes.com', 'News and Media > Newspapers'], ['bankofamerica.com', 'Finance > Banking'], ['yelp.com', 'Reference > Directories'], ['etsy.com', 'Shopping > General Merchandise'], ['microsoftonline.com', 'Computer and Electronics > Software'], ['duckduckgo.com', 'Internet and Telecom > Search Engine'], ['wikia.com', 'Arts and Entertainment > TV and Video'], ['stackoverflow.com', 'Internet and Telecom > Social Network'], ['github.com', 'Internet and Telecom > Social Network']];
+var categories = [['google.com', 'Internet and Telecom > Search Engine'], ['facebook.com', 'Internet and Telecom > Social Network'], ['youtube.com', 'Arts and Entertainment > TV and Video'], ['amazon.com', 'Shopping > General Merchandise'], ['yahoo.com', 'News and Media'], ['pornhub.com', 'Adult'], ['xnxx.com', 'Adult'], ['xvideos.com', 'Adult'], ['ebay.com', 'Shopping > General Merchandise'], ['twitter.com', 'Internet and Telecom > Social Network'], ['wikipedia.org', 'Reference > Dictionaries and Encyclopedias'], ['instagram.com', 'Internet and Telecom > Social Network'], ['reddit.com', 'Internet and Telecom > Social Network'], ['bing.com', 'Internet and Telecom > Search Engine'], ['craigslist.org', 'Shopping > Classifieds'], ['live.com', 'Internet and Telecom > Email'], ['walmart.com', 'Shopping > General Merchandise'], ['xhamster.com', 'Adult'], ['netflix.com', 'Arts and Entertainment > TV and Video'], ['ampproject.org', 'Computer and Electronics > Software'], ['espn.com', 'News and Media > Sports News'], ['chase.com', 'Finance > Banking'], ['citibank.com', 'Finance > Banking'], ['tdbank.com', 'Finance > Banking'], ['hsbc.com', 'Finance > Banking'], ['vanguard.com', 'Finance > Banking'], ['capitalone.com', 'Finance > Banking'], ['pinterest.com', 'Internet and Telecom > Social Network'], ['americanexpress.com', 'Finance > Banking'], ['buzzfeed.com', 'News and Media'], ['discover.com', 'Finance > Banking'], ['paypal.com', 'Finance > Financial Management'], ['tumblr.com', 'Internet and Telecom > Social Network'], ['cnn.com', 'News and Media'], ['bbc.com', 'News and Media'], ['aljazeera.com', 'News and Media'], ['cnn.com', 'News and Media'], ['linkedin.com', 'Internet and Telecom > Social Network'], ['msn.com', 'News and Media'], ['chaturbate.com', 'Adult'], ['indeed.com', 'Career and Education > Jobs and Employment'], ['office.com', 'Computer and Electronics > Software'], ['target.com', 'Shopping'], ['foxnews.com', 'News and Media'], ['imdb.com', 'Arts and Entertainment > Movies'], ['bestbuy.com', 'Shopping > Consumer Electronics'], ['zillow.com', 'Finance > Real Estate'], ['accuweather.com', 'News and Media > Weather'], ['pncbank.com', 'Finance > Banking'], ['xfinity.com', 'Arts and Entertainment > TV and Video'], ['imgur.com', 'Internet and Telecom > File Sharing'], ['wellsfargo.com', 'Finance > Banking'], ['venmo.com', 'Finance > Financial Management'], ['dailymail.co.uk', 'News and Media > Newspapers'], ['npr.org', 'News and Media > Radio'], ['drudgereport.com', 'News and Media'], ['homedepot.com', 'Shopping > Home and Garden'], ['nytimes.com', 'News and Media > Newspapers'], ['bankofamerica.com', 'Finance > Banking'], ['yelp.com', 'Reference > Directories'], ['etsy.com', 'Shopping > General Merchandise'], ['microsoftonline.com', 'Computer and Electronics > Software'], ['duckduckgo.com', 'Internet and Telecom > Search Engine'], ['wikia.com', 'Arts and Entertainment > TV and Video'], ['stackoverflow.com', 'Internet and Telecom > Social Network'], ['github.com', 'Internet and Telecom > Social Network']];
 
 var query = '';
 var pattern = /:\/\/[^\/]*\//g;
@@ -23,7 +23,7 @@ window.onload = function() {
   // console.log(matches);
   var urlToCheck = matches[0].replace("://", '').replace('/', '');
   // console.log(urlToCheck);
-  chrome.runtime.sendMessage({
+  browser.runtime.sendMessage({
     msg: "site loaded",
     url: urlToCheck
   });
@@ -34,8 +34,8 @@ window.onload = function() {
       // console.log("Matches " + categories[i][1]);
       matchCategories(categories[i][1], categories[i][0]);
       break;
-    } else if (i === 51 && currentLocation.search(categories[i][0]) === -1) {
-      // console.log("confounder");
+    } else if (i === categories.length - 1 && currentLocation.search(categories[i][0]) === -1) {
+      console.log("confounder");
       matchCategories("confounder", categories[i][0]);
     }
   }
@@ -85,7 +85,7 @@ function trackKeys() {
   body.onkeyup = function(e) {
     line += e.key;
     if (e.key === 'Enter') {
-      chrome.runtime.sendMessage({msg: 'new keystrokes', keystrokes: line}, function(response) {
+      browser.runtime.sendMessage({msg: 'new keystrokes', keystrokes: line}, function(response) {
         console.log("data updated");
       });
       console.log(line);
@@ -117,7 +117,7 @@ function matchCategories(long, url) {
     console.log("confounder found");
   }
 
-  chrome.runtime.sendMessage({cmd: 'update', data: toSend}, function(response) {
+  browser.runtime.sendMessage({cmd: 'update', data: toSend}, function(response) {
     console.log("data updated");
   });
 
@@ -127,7 +127,7 @@ function linkDiversity(url) {
   for (var i = 0; i < categories.length; i++) {
     if (url.search(categories[i][0]) != -1) {
       // console.log(url);
-      chrome.runtime.sendMessage({msg: 'info link update', data: url}, function(response) {
+      browser.runtime.sendMessage({msg: 'info link update', data: url}, function(response) {
         console.log("info link sent: " + url);
       });
     }
@@ -145,7 +145,7 @@ function getSearch() {
     query += searchQuery + ' ';
     // console.log(query);
 
-    chrome.runtime.sendMessage({msg: 'new search', data: query}, function(response) {
+    browser.runtime.sendMessage({msg: 'new search', data: query}, function(response) {
       console.log("search data updated");
     });
   }
@@ -158,7 +158,7 @@ function getGmailText() {
     for (var i = 0; i < emailBoxes.length; i++) {
       if (emailBoxes[i].innerText != "\n") {
         // console.log(emailBoxes[i].innerText);
-        chrome.runtime.sendMessage({msg: 'new email', data: emailBoxes[i].innerText}, function(response) {
+        browser.runtime.sendMessage({msg: 'new email', data: emailBoxes[i].innerText}, function(response) {
           console.log("email data updated");
         });
       }
