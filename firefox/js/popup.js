@@ -189,10 +189,22 @@ function uploadPhoto() {
 
         reader.onload = function(e) {
           var du = reader.result;
+          var cvs = document.getElementById("canvas");
           // alert(du);
-          document.getElementById("canvas").src = du;
-          // document.getElementById("canvas").style.display = "block";
-          window.localStorage.setItem("photoURL", String(du));
+          cvs.src = du;
+          // alert(cvs.width);
+
+          cvs.onload = function() {
+            // alert(this.width);
+            if (this.width != 300 || this.height > 400) {
+              // alert("Wrong size. Please choose another photo with the specified dimensions.");
+              document.getElementById("error").style.display = "block";
+            } else {
+              document.getElementById("error").style.display = "none";
+              document.getElementById("submit").style.display = "inline-block";
+              window.localStorage.setItem("photoURL", String(du));
+            }
+          };
         };
 
         reader.readAsDataURL(file);

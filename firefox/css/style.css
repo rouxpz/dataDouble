@@ -1,7 +1,7 @@
 body {
   font-family: 'Libre Franklin', sans-serif;
   /* width: 300px; */
-  padding:5px;
+  padding:10px;
 }
 
 h1 {
@@ -36,4 +36,15 @@ button:hover {
 
 strong {
   font-weight: 600;
+}
+
+#submit {
+  color: black;
+  background-color: #2abe1d;
+  display: none;
+}
+
+#error {
+  display: none;
+  color: #be1d7b;
 }

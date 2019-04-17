@@ -14,11 +14,12 @@ special thanks to wendy chun, jessa lingel, and the members of the critical data
 </head>
 
 <body>
-  <img id="canvas" class = "hidden" src="" width="300" height="389" alt="uploaded image">
+  <img id="canvas" class = "hidden" src="" alt="uploaded image">
   <canvas id="ctx" class = "hidden" width="300" height="389"></canvas>
   <div id="initialPage">
     <h1><em>Welcome to dataDouble.</em></h1>
-    <p>Before we begin, please upload a photograph of yourself.<br> The photo must be 300 pixels wide by 400 pixels high.</p>
+    <p>Before we begin, please upload a photograph of yourself.<br> <br><strong>The photo must be exactly 300 pixels wide by 400 pixels high.</strong></p>
+    <p id="error"><em><strong>Wrong size. Please choose another photo with the specified dimensions.</strong></em></p>
     <form id="upload" class = "hidden" enctype="multipart/form-data" method="post" action="#">
       <input  type="file" id="fileupload" name="files[]" multiple />
       <input type="submit" value="submit" id="submit" />
