@@ -163,7 +163,7 @@ function updateImage() {
     // c.style.display = "block";
 
     // alert(document.getElementById("canvas").src);
-    if (daysPassed === 7 || daysPassed >= 14) {
+    if (daysPassed >= 14) {
       var download = document.getElementById("toDL");
       download.style.display = "block";
 
