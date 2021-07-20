@@ -11,6 +11,6 @@ Through the collection of a user’s information, the extension then modifies an
 
 <img src="https://roopavasudevan.com/img/dd-beginning.png" alt="Screenshot of extension popup when beginning" height="300" style="margin-right:10px;"/> <img src="https://roopavasudevan.com/img/dd-in-progress.png" alt="Screenshot of extension popup 5 days in" height="300"/>
 
-For more information, please visit the [project page](https://rouxpz.com/data-double) on my website. To participate in this project, please visit [this signup page](https://bit.ly/2Itmc3g).
+For more information, please visit the [project page](https://datadouble.art). Download the extension on Google Chrome (coming soon) and [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/datadouble/).
 
 *Special thanks to [Wendy Chun](https://www.sfu.ca/communication/team/faculty/wendy-chun.html), [Jessa Lingel](https://www.asc.upenn.edu/people/faculty/jessa-lingel-phd), Haverford College and the [Philadelphia Area Creative Collaboratives](https://collaboratives.haverford.edu/surveillance-states/), and the members of the Critical Data Studies (F18) and Doing Internet Studies (S19) courses at the Annenberg School for Communication at the University of Pennsylvania.*
