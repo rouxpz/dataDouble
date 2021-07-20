@@ -1,7 +1,7 @@
 //dataDouble
 //a project by roopa vasudevan
 //browser extension for firefox
-//special thanks to wendy chun, jessa lingel, and the members of the critical data studies (f18) and doing internet studies (s19) courses at upenn annenberg
+//visit datadouble.art for more information about the project
 //utilizes caman.js (http://camanjs.com/) for image manipulation
 
 //this script translates collected data into the final image and info in the extension popup.
@@ -46,7 +46,7 @@ browser.runtime.onMessage.addListener(
           uploadPhoto();
         } else if (request.msg === "here is the new data") {
 
-            browser.extension.getBackgroundPage().console.log("SENT TO POPUP");
+            // browser.extension.getBackgroundPage().console.log("SENT TO POPUP");
             browser.extension.getBackgroundPage().console.log(request.data);
 
             newData = request.data;
@@ -58,9 +58,15 @@ browser.runtime.onMessage.addListener(
 
             var toPrint = '';
 
-            for (var i = 0; i < topWords.length; i++) {
-              if (topWords[i] != null) {
-                toPrint += topWords[i][0] + ', ' + topWords[i][1] + " | ";
+            if (topWords.length > 0) {
+              for (var i = 0; i < topWords.length; i++) {
+                if (topWords[i] != null) {
+                  if (i < topWords.length - 1) {
+                    toPrint += topWords[i][0] + ', ' + topWords[i][1] + " | ";
+                  } else {
+                    toPrint += topWords[i][0] + ', ' + topWords[i][1];
+                  }
+                }
               }
             }
 
@@ -77,8 +83,12 @@ browser.runtime.onMessage.addListener(
             var topCats = '';
             sortedData.sort(function(a, b){return b.value - a.value});
             for (var i = 0; i < sortedData.length; i++) {
-              if (i <= 2) {
-                topCats += sortedData[i].cat + " | ";
+              if (i >= 0 && i < 3) {
+                if (i < sortedData.length - 1) {
+                  topCats += sortedData[i].cat + " | ";
+                } else {
+                  topCats += sortedData[i].cat;
+                }
               }
             }
 
@@ -86,6 +96,7 @@ browser.runtime.onMessage.addListener(
             document.getElementById("totalSites").innerHTML += totalURLs;
             document.getElementById("domains").innerHTML += uniqueDomains;
             document.getElementById("cats").innerHTML += topCats;
+
             updateImage();
         }
     }
@@ -163,9 +174,9 @@ function updateImage() {
     // c.style.display = "block";
 
     // alert(document.getElementById("canvas").src);
-    if (daysPassed >= 6) {
+    if (daysPassed >= 14) {
       var download = document.getElementById("toDL");
-      download.style.display = "block";
+      document.getElementById("downloadPhoto").disabled = false;
 
       //download final portrait -- only visible after 14 days have passed
       download.onclick = function() {
@@ -192,7 +203,6 @@ function uploadPhoto() {
           var cvs = document.getElementById("canvas");
           // alert(du);
           cvs.src = du;
-          // alert(cvs.width);
 
           cvs.onload = function() {
             // alert(this.width);
@@ -214,7 +224,7 @@ function uploadPhoto() {
             filename: file.name
           });
         } else {
-          alert("no file");
+          // alert("no file");
         }
     }
   } else {
@@ -222,6 +232,7 @@ function uploadPhoto() {
     browser.runtime.sendMessage({
       msg: "send data to popup"
     });
+
     links = 0;
     document.getElementById('initialPage').style.display = "none";
     document.getElementById('stats').style.display = "block";
@@ -240,4 +251,14 @@ function uploadPhoto() {
     // c.style.display = "block";
 
   }
+}
+
+document.getElementById("changePhoto").onclick = function() {
+  browser.runtime.sendMessage({
+      msg: "new photo requested",
+      filename: ''
+    });
+
+  document.getElementById('changePhotoAck').style.display = "block";
+  document.getElementById('stats').style.display = "none";
 }

@@ -1,25 +1,57 @@
 //dataDouble
 //a project by roopa vasudevan
 //browser extension for firefox
-//special thanks to wendy chun, jessa lingel, and the members of the critical data studies (f18) and doing internet studies (s19) courses at upenn annenberg
+//visit datadouble.art for more information about the project
 
 //background script running in the extension to collect context information and sort it to deliver to the popup.
 
 var stopwords = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', "don't", 'should', "should've", 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', "aren't", 'couldn', "couldn't", 'didn', "didn't", 'doesn', "doesn't", 'hadn', "hadn't", 'hasn', "hasn't", 'haven', "haven't", 'isn', "isn't", 'ma', 'mightn', "mightn't", 'mustn', "mustn't", 'needn', "needn't", 'shan', "shan't", 'shouldn', "shouldn't", 'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"];
 
-let updatedData = [['commerce', 0], ['search', 0], ['social', 0], ['finance', 0], ['info', 0], ['adult', 0], ['confounder', 0]];
+let updatedData;
 let keyLog = '';
 let words = [];
 let topTen = [];
 let infoLinks = [];
-let totalPortraits = 0;
-let filename = '';
-let totalSites = 0;
+let totalPortraits;
+let filename = "";
+let totalSites;
+let uniqueSites;
 let allSites = {};
+let keys;
+let linkNumber;
+var count = {};
 
 browser.runtime.onInstalled.addListener(function() {
-  browser.storage.sync.set({photo: filename, data: updatedData, keys: [], linkNumber: 0, totalPortraits: 0}, function() {
-    // console.log("initial data refreshed, filename: " + filename);
+  browser.storage.sync.get(["photo", "data", "keys", "linkNumber", "totalPortraits", "total", "unique", "wordCount"], function(obj) {
+    console.log(obj);
+    if (obj.data === null) {
+      browser.storage.sync.clear();
+      // console.log("no filename");
+      filename = '';
+      updatedData = [['commerce', 0], ['search', 0], ['social', 0], ['finance', 0], ['info', 0], ['adult', 0], ['confounder', 0]];
+      keys = [];
+      linkNumber = 0;
+      totalPortraits = 0;
+      totalSites = 0;
+      uniqueSites = 0;
+      count = {};
+      console.log(updatedData);
+    } else {
+      // console.log(obj.photo);
+      filename = obj.photo;
+      updatedData = obj.data;
+      keys = obj.keys;
+      sorted = obj.keys;
+      linkNumber = obj.linkNumber;
+      totalPortraits = obj.totalPortraits;
+      totalSites = obj.total;
+      uniqueSites = obj.unique;
+      count = obj.wordCount;
+    }
+  });
+
+  browser.storage.sync.set({photo: filename, data: updatedData, keys: keys, linkNumber: linkNumber, totalPortraits: totalPortraits, total:totalSites, unique:uniqueSites, wordCount: count}, function() {
+    // console.log("data refreshed, filename: " + filename);
   });
 
   // browser.declarativeContent.onPageChanged.removeRules(undefined, function() {
@@ -29,6 +61,40 @@ browser.runtime.onInstalled.addListener(function() {
   //   }]);
   // });
 });
+
+browser.runtime.onStartup.addListener(function() {
+  // console.log("started up");
+
+  browser.storage.sync.get(["photo", "data", "keys", "linkNumber", "totalPortraits", "total", "unique", "wordCount"], function(obj) {
+    console.log(obj);
+    if (obj.photo === undefined) {
+      // console.log("no filename");
+      filename = '';
+      updatedData = [['commerce', 0], ['search', 0], ['social', 0], ['finance', 0], ['info', 0], ['adult', 0], ['confounder', 0]];
+      keys = [];
+      linkNumber = 0;
+      totalPortraits = 0;
+      totalSites = 0;
+      uniqueSites = 0;
+      count = {};
+    } else {
+      // console.log(obj.photo);
+      filename = obj.photo;
+      updatedData = obj.data;
+      keys = obj.keys;
+      sorted = obj.keys;
+      linkNumber = obj.linkNumber;
+      totalPortraits = obj.totalPortraits;
+      totalSites = obj.total;
+      uniqueSites = obj.unique;
+      count = obj.wordCount;
+    }
+  });
+
+  browser.storage.sync.set({photo: filename, data: updatedData, keys: keys, linkNumber: linkNumber, totalPortraits: totalPortraits, total:totalSites, unique:uniqueSites, wordCount: count}, function() {
+    // console.log("data refreshed, filename: " + filename);
+  });
+})
 
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.cmd == "update") { //categorization of URLs visited
@@ -73,10 +139,11 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       // console.log(infoLinks);
       // console.log(infoLinks.length);
     } else {
-      console.log("");
+      // console.log("");
     }
   } else if (request.msg === "new search") { //search logger
     newSearchData = request.data;
+    newSearchData = newSearchData.replace('\n', ' ').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace('%27', "'");
     newSearchData = newSearchData.split(' ');
 
     for (var i = 0; i < newSearchData.length; i++) {
@@ -87,8 +154,9 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // console.log(words);
   } else if (request.msg === "send data to popup") { //send everything to popup
     //get top 10 keywords to send to popup
+
+    console.log(count);
     var sorted = [];
-    var count = {};
 
     words.forEach(function(i) {
       count[i] = (count[i]||0) + 1;
@@ -103,27 +171,33 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     });
 
     sorted.length = 5;
-    // console.log(sorted);
-    // console.log("Info Diversity: " + infoLinks.length);
+    if (sorted[0] != null) {
+      keys = sorted;
+    }
 
     //send everything to popup
     browser.runtime.sendMessage({
       msg: "here is the new data",
       data: updatedData,
-      keys: sorted,
+      keys: keys,
       linkNumber: infoLinks.length,
       totalPortraits: totalPortraits,
       total: totalSites,
-      unique: Object.keys(allSites).length
+      unique: uniqueSites,
+      wordCount: count
     });
-    // console.log("new data sent to popup");
 
     browser.storage.sync.set({photo: filename,
       data: updatedData,
-      keys: sorted,
+      keys: keys,
       linkNumber: infoLinks.length,
-      totalPortraits: totalPortraits}, function() {
-      console.log("storage data refreshed");
+      totalPortraits: totalPortraits,
+      total: totalSites,
+      unique: uniqueSites,
+      wordCount: count
+    }, function() {
+      // console.log("storage data refreshed");
+      words = [];
     });
 
     totalPortraits += 1;
@@ -139,10 +213,13 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // console.log("NEW PHOTO: " + filename);
     browser.storage.sync.set({photo: filename,
       data: updatedData,
-      keys: sorted,
+      keys: keys,
       linkNumber: infoLinks.length,
-      totalPortraits: totalPortraits}, function() {
-      console.log("storage data refreshed");
+      totalPortraits: totalPortraits,
+      total: totalSites,
+      unique: uniqueSites,
+      wordCount: count}, function() {
+      // console.log("storage data refreshed");
     });
   } else if (request.msg == "site loaded") {
     totalSites += 1;
@@ -153,6 +230,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       allSites[urlToCheck] += 1;
     } else {
       allSites[urlToCheck] = 1;
+      uniqueSites += 1;
     }
 
     browser.runtime.sendMessage({
@@ -160,8 +238,18 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       total: totalSites
     });
 
-    // console.log("new site data to popup");
-    // console.log(urlToCheck + " has been loaded " + allSites[urlToCheck] + " times. There have been " + totalSites + " sites visited.");
+  } else if (request.msg == "new photo requested") {
+    filename = request.filename;
+    browser.storage.sync.set({photo: filename,
+      data: updatedData,
+      keys: keys,
+      linkNumber: infoLinks.length,
+      totalPortraits: totalPortraits,
+      total: totalSites,
+      unique: uniqueSites,
+      wordCount: count}, function() {
+      // console.log("need new photo");
+    });
   }
 });
 

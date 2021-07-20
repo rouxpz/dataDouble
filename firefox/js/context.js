@@ -1,7 +1,7 @@
 //dataDouble
 //a project by roopa vasudevan
 //browser extension for firefox
-//special thanks to wendy chun, jessa lingel, and the members of the critical data studies (f18) and doing internet studies (s19) courses at upenn annenberg
+//visit datadouble.art for more information about the project
 
 //code for interacting with user browsing activity.
 
@@ -28,14 +28,14 @@ window.onload = function() {
     url: urlToCheck
   });
 
-  console.log(categories.length);
+  // console.log(categories.length);
   for (var i = 0; i < categories.length; i++) {
     if (currentLocation.search(categories[i][0]) != -1) {
       // console.log("Matches " + categories[i][1]);
       matchCategories(categories[i][1], categories[i][0]);
       break;
     } else if (i === categories.length - 1 && currentLocation.search(categories[i][0]) === -1) {
-      console.log("confounder");
+      // console.log("confounder");
       matchCategories("confounder", categories[i][0]);
     }
   }
@@ -54,15 +54,15 @@ function trackMouse() {
 
   for (var i = 0; i < links.length; i++) {
     links[i].onmousedown = function() {
-      console.log(this.href);
+      // console.log(this.href);
       for (var i = 0; i < categories.length; i++) {
         if (this.href.search(categories[i][0]) != -1) {
-          console.log(categories[i][0] + " matches!");
-          console.log(categories[i][1]);
+          // console.log(categories[i][0] + " matches!");
+          // console.log(categories[i][1]);
           matchCategories(categories[i][1], categories[i][0]);
           break;
         } else if (i === 51 && currentLocation.search(categories[i][0]) === -1) {
-          console.log("confounder");
+          // console.log("confounder");
           matchCategories("confounder", categories[i][0]);
         }
       }
@@ -70,11 +70,17 @@ function trackMouse() {
   }
 
   if (window.location.href.indexOf("mail.google.com") != -1) {
-    console.log("ON GMAIL");
+    // console.log("ON GMAIL");
 
     document.body.onmousedown = function(e) {
       getGmailText();
     }
+  // } else if (window.location.href.indexOf("facebook.com") != -1) {
+  //   console.log("ON FACEBOOK");
+  //
+  //   document.body.onmousedown = function(e) {
+  //     getPosts();
+  //   }
   }
 }
 
@@ -84,11 +90,11 @@ function trackKeys() {
 
   body.onkeyup = function(e) {
     line += e.key;
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && line.length - 5 > 0) {
       browser.runtime.sendMessage({msg: 'new keystrokes', keystrokes: line}, function(response) {
-        console.log("data updated");
+        // console.log("data updated");
       });
-      console.log(line);
+      // console.log(line);
       line = '';
     }
   }
@@ -97,7 +103,7 @@ function trackKeys() {
 function matchCategories(long, url) {
   long = long.toLowerCase();
   toSend = '';
-  if (long.search('shopping') != -1) {
+  if (long.search('shopping') != -1 || long.search("classifieds") != -1) {
     toSend = 'commerce';
     // console.log("commerce: " + commerce);
   } else if (long.search("social") != -1) {
@@ -114,11 +120,11 @@ function matchCategories(long, url) {
   } else if (long.search("confounder") != -1){
     // console.log("IS THIS BEING READ");
     toSend = 'confounder';
-    console.log("confounder found");
+    // console.log("confounder found");
   }
 
   browser.runtime.sendMessage({cmd: 'update', data: toSend}, function(response) {
-    console.log("data updated");
+    // console.log("data updated");
   });
 
 }
@@ -128,7 +134,7 @@ function linkDiversity(url) {
     if (url.search(categories[i][0]) != -1) {
       // console.log(url);
       browser.runtime.sendMessage({msg: 'info link update', data: url}, function(response) {
-        console.log("info link sent: " + url);
+        // console.log("info link sent: " + url);
       });
     }
   }
@@ -137,16 +143,19 @@ function linkDiversity(url) {
 function getSearch() {
   var searchQuery = window.location.search;
   if (searchQuery != '') {
-    // console.log(searchQuery.indexOf('&q='));
-    searchQuery = searchQuery.substring(
-      searchQuery.indexOf('&q='), searchQuery.length
-    );
-    searchQuery = searchQuery.replace(/\+/g, ' ').replace('&q=', '');
+    var begin = searchQuery.indexOf("q=") + 2;
+    var end = searchQuery.indexOf("&", begin);
+    if (begin < end) {
+      searchQuery = searchQuery.substring(begin, end);
+    } else {
+      searchQuery = searchQuery.substring(begin, searchQuery.length);
+    }
+    searchQuery = searchQuery.replace(/\+/g, ' ');
     query += searchQuery + ' ';
-    // console.log(query);
+    console.log(query);
 
     browser.runtime.sendMessage({msg: 'new search', data: query}, function(response) {
-      console.log("search data updated");
+      // console.log("search data updated");
     });
   }
 }
@@ -159,7 +168,7 @@ function getGmailText() {
       if (emailBoxes[i].innerText != "\n") {
         // console.log(emailBoxes[i].innerText);
         browser.runtime.sendMessage({msg: 'new email', data: emailBoxes[i].innerText}, function(response) {
-          console.log("email data updated");
+          // console.log("email data updated");
         });
       }
     }

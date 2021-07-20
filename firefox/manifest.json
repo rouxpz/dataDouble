@@ -1,7 +1,7 @@
 {
   "name": "dataDouble",
-  "version": "1.4",
-  "description": "dataDouble Browser Extension",
+  "version": "1.0",
+  "description": "dataDouble Browser Extension: an art project by Roopa Vasudevan",
   "icons": {
     "48": "icons/dd-icon-48.png",
     "96": "icons/dd-icon-96.png"

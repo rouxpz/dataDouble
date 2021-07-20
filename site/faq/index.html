@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>dataDouble: FAQ</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="stylesheet" href="../css/styles.css">
+    <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <a class="heading" href="/"><h1>dataDouble</h1></a>
+      <div class="nav">
+        <a class="navLink" href="../code-book">Code Book</a>
+        <a class="navLink" href="../">About the Project</a>
+        <a class="navLink" href="../acknowledgements">Acknowledgements</a>
+        <a class="navLink" href="../#download">Download</a>
+        <img id="logo" onclick="showOptions()" src="../img/dd-icon-96.png" width="50" alt="">
+      </div>
+    </div>
+
+    <div class="projectInfo">
+      <h2>FREQUENTLY ASKED QUESTIONS</h2>
+      <br>
+      <div class="question">
+        <h3 class="faq">What exactly does this extension do?</h3>
+        <p class="answer">When you install the <em>dataDouble</em> extension, you will be asked to upload a photo of yourself measuring 300 pixels wide by 400 pixels high. Once that photo has been updated, the extension works in the background to track your browsing data. After 14 days, the link to download the portrait will become active; your browsing data will be used to apply image processing to the photo you uploaded at the beginning of the process, creating your “data double” out of an image of yourself.</p>
+      </div>
+
+      <div class="question">
+        <h3 class="faq">When you say the extension is tracking my “browsing data”, what do you mean by that?</h3>
+        <p class="answer">The extension collects the total amount of websites you visit and what they are; the number of unique URLs you go to; the categories of the websites; and the top key words you type in the browser. You can view a summary of this information in the extension popup (Chrome) or sidebar (Firefox).</p>
+      </div>
+
+      <div class="question">
+        <h3 class="faq">Whoa, that’s a lot! Are you collecting any of my browsing data anywhere?</h3>
+        <p class="answer">No. None of your browsing data, key words, or photographic information is transmitted to any kind of server. Everything remains local to your browser and computer, and will NEVER be shared with me, unless you choose to send it to me voluntarily.</p>
+      </div>
+
+      <div class="question">
+        <h3 class="faq">Help! I’m getting an error when I try to upload my photo.</h3>
+        <p class="answer">Your photo must measure <strong><em>300 pixels wide by 400 pixels high</em></strong> for it to work in the extension. If you need help cropping or resizing the image, Adobe provides free tools to do this <a href="https://www.adobe.com/express/feature/image/resize" target="_blank">here</a>.</p>
+      </div>
+
+      <div class="question">
+        <h3 class="faq">Help! The extension looks like it reset itself.</h3>
+        <p class="answer">Follow the prompts to upload your photo; when you get to the stats screen, check to see if your data was saved. If it hasn’t, and everything has reset to 0, you will need to uninstall and reinstall the extension.</p>
+      </div>
+
+      <div class="question">
+        <h3 class="faq">Why do I have to wait 14 days to see my portrait?</h3>
+        <p class="answer">14 days was the length of time that participants used the extension in the first iteration of the project before I interviewed them; this is an homage to that process. I also have found that two weeks enables enough data to be collected for the image processing to be visually effective. You are free to use the extension for as long as you want after that initial two weeks; you will be able to download portraits whenever you want after that window.</p>
+      </div>
+
+      <div class="question">
+        <h3 class="faq">Why does my portrait look the way it does?</h3>
+        <p class="answer">Visit the <a href="../code-book">code book</a> for an explanation of the visual effects that are used to manipulate your photo, and how they correspond to your browsing data.</p>
+      </div>
+
+      <div class="question">
+        <h3 class="faq">Can I volunteer my portrait for exhibition opportunities?</h3>
+        <p class="answer">Of course! If you’re interested in contributing your portrait to the printed version of this project, send me an email at <a href="mailto:roopa.vasudevan@gmail.com" target="_blank">roopa.vasudevan@gmail.com</a>. Your portrait will be risograph printed and added to a library of participating users. You will need to sign a consent form to do this. Visuals of the printed portraits will be accessible from this site soon.</p>
+      </div>
+
+      <div class="question">
+        <h3 class="faq">Who are you, and how did you come up with this project?</h3>
+        <p class="answer">My name is <a href="https://roopavasudevan.com" target="_blank">Roopa Vasudevan</a>, and I’m a media artist and researcher examining power, default practices, and technology. <em>dataDouble</em> has been in the works since 2018. The project started from an interest in the ways that surveillance capitalism — specifically, today’s rampant data collection in our everyday browsing habits — affects our perceptions of our identity and how we are led to conceptualize who we are.
+        <br><br>
+        The first iteration began as a participatory project where volunteers would use the extension for two weeks; after this period I would interview them about their experience using the extension, along with their thoughts on dataveillance and identity. This version ws recently shown in my solo exhibition, entitled <a href="https://voxpopuligallery.org/exhibitions/roopa-vasudevan-machine-readable/" target="_blank"><em>Machine Readable</em></a>, at Vox Populi in Philadelphia, PA. After this version was shown, I opened up the extension to be publicly available via the Chrome and Firefox web stores for anyone to use.
+        <br><br>
+        You can <a href="https://vox-populi-shop.square.site/product/roopa-vasudevan-datadouble-publication/104" target="_blank">purchase a publication</a> containing the portraits and interview selections from the first iteration, along with an introductory essay about the project, at the Vox Populi web store. You can view and fork the code for the project <a href="https://github.com/rouxpz/dataDouble" target="_blank">on GitHub</a>.</p>
+      </div>
+
+    </div>
+    <br><br>
+
+
+    <script type="text/javascript">
+
+      var questions = document.getElementsByClassName("question");
+      var navLinks = document.getElementsByClassName("navLink");
+
+      for (var i = 0; i < questions.length; i++) {
+        questions[i].onclick = function() {
+          // console.log(this.children[1]);
+          $(this).find("p").toggle();
+          // this.children[1].style.display = "none";
+        }
+      }
+
+      if (screen.width <= 700) {
+        for (var i = 0; i < navLinks.length; i++) {
+          var distance = 13 + 4*i;
+          navLinks[i].style.top = "" + distance + "%";
+        }
+      }
+
+      function showOptions() {
+        $(".navLink").animate({width:'toggle'}, 1000);
+      }
+    </script>
+  </body>
+</html>

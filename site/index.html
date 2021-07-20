@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>dataDouble</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <a class="heading" href="/"><h1>dataDouble</h1></a>
+      <div class="nav">
+        <a class="navLink" href="/code-book">Code Book</a>
+        <a class="navLink" href="/acknowledgements">Acknowledgements</a>
+        <a class="navLink" href="/faq">FAQ</a>
+        <a class="navLink" href="#download">Download</a>
+        <img id="logo" onclick="showOptions()" src="img/dd-icon-96.png" width="50" title="Click to toggle menu options.">
+      </div>
+    </div>
+
+    <div class="projectInfo"><h2>ABOUT THE PROJECT</h2>
+    <p class="infoText"><em>dataDouble</em> is a project designed to illuminate the ways in which our identities are reduced and flattened by data collection. Finding inspiration in the concept of the “data double”, a likeness developed out of the digital traces that we (voluntarily or involuntarily) leave behind in our day to day interactions with technology, the project seeks to translate an individual user’s browsing data into a visual interpretation of how they are seen in the eyes of those extracting their information.</p>
+
+    <div class="portraits">
+      <div class="portrait">
+        <img class="photo" src="img/portraits/002-final.png" width="200" alt="">
+        <img class="photo" src="img/portraits/003-final.png" width="200" alt="">
+        <img class="photo" src="img/portraits/004-final.png" width="200" alt="">
+        <img class="photo" src="img/portraits/005-final.png" width="200" alt="">
+        <img class="photo" src="img/portraits/008-final.png" width="200" alt="">
+      </div>
+    </div>
+
+    <p class="infoText">The core of the project consists of a web browser extension, currently operational in both Google Chrome and Mozilla Firefox, which locally collects a user’s browsing data cumulatively from the time of installation. Upon installing, the user is also prompted to upload a photo of themselves, which is altered and shaped into a portrait of their “data double” by applying image manipulation techniques that directly correlate to the amount and type of data collected from their browsing. The portrait is available to download from the extension after 14 days of use.</p>
+
+    <div class="portraits">
+      <img id="screenshot" src="img/01-dd-small.png" height="500" alt="">
+    </div>
+
+    <p class="infoText">As data accumulates, the image, while still somewhat recognizable as a portrait of the individual user, becomes a warped and alternate representation of the self; the reduced, flattened version that is used as a basis for the extremely segmented experience that users have on the Internet today. But by utilizing a portrait of the user as a baseline, the project also serves to inject humanity back into a process that often strips it away, attempting to return voice to the user in the process.</p>
+
+    <div class="portraits">
+      <div class="portrait">
+        <img class="photo" src="img/portraits/011-final.png" width="200" alt="">
+        <img class="photo" src="img/portraits/015-final.png" width="200" alt="">
+        <img class="photo" src="img/portraits/016-final.png" width="200" alt="">
+        <img class="photo" src="img/portraits/017-final.png" width="200" alt="">
+        <img class="photo" src="img/portraits/019-final.png" width="200" alt="">
+      </div>
+    </div>
+
+    <div class="infoText" id="download">
+      <p><em>dataDouble</em> was created by artist and researcher <a href="https://roopavasudevan.com">Roopa Vasudevan</a>.</p>
+
+      <p>Download the extension for Google Chrome and <a href="https://addons.mozilla.org/en-US/firefox/addon/datadouble/" target="_blank">Mozilla Firefox</a> soon. The <em>dataDouble</em> extension is also currently being developed for additional browsers.</p>
+
+      <p>For a list of frequently asked questions, <a href="/faq">visit this page</a>. If you have additional questions about the project, or want to contribute your portrait to the print library, email <a href="mailto:roopa.vasudevan@gmail.com" target="
+        ">roopa.vasudevan@gmail.com</a>.</p>
+    </div>
+    <br><br>
+    </div>
+
+    <script type="text/javascript">
+
+      var navLinks = document.getElementsByClassName("navLink");
+      var portraits = document.getElementsByClassName("photo");
+      var screenshot = document.getElementById("screenshot");
+
+      if (screen.width <= 700) {
+        for (var i = 0; i < navLinks.length; i++) {
+          var distance = 13 + 4*i;
+          navLinks[i].style.top = "" + distance + "%";
+        }
+
+        for (var i = 0; i < portraits.length; i++) {
+          portraits[i].width = "350";
+        }
+
+        screenshot.width = "350";
+        screenshot.height = "230";
+      }
+
+      function showOptions() {
+        $(".navLink").animate({width:'toggle'}, 1000);
+      }
+    </script>
+  </body>
+</html>

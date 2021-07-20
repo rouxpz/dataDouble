@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>dataDouble: Acknowledgements</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="stylesheet" href="../css/styles.css">
+    <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <a class="heading" href="/"><h1>dataDouble</h1></a>
+      <div class="nav">
+        <a class="navLink" href="../code-book">Code Book</a>
+        <a class="navLink" href="../">About the Project</a>
+        <a class="navLink" href="../faq">FAQ</a>
+        <a class="navLink" href="../#download">Download</a>
+        <img id="logo" onclick="showOptions()" src="../img/dd-icon-96.png" width="50" alt="">
+      </div>
+    </div>
+
+    <div class="projectInfo"><h2>ACKNOWLEDGEMENTS</h2>
+
+    <p>Thank you to the following individuals and groups for their support in realizing this project: <a href="https://www.sfu.ca/communication/team/faculty/wendy-chun.html" target="_blank">Wendy Hui Kyong Chun</a>, <a href="https://www.asc.upenn.edu/people/faculty/jessa-lingel-phd" target="_blank">Jessa Lingel</a>, <a href="https://reees.macmillan.yale.edu/people/aniko-szucs", target="_blank">Aniko Szucs</a>, the students and faculty of the <a href="https://www.asc.upenn.edu/" target="_blank">Annenberg School for Communication</a> at the University of Pennsylvania, the <a href="https://collaboratives.haverford.edu/surveillance-states/" target="_blank">Philadelphia Area Creative Collaboratives</a>, the <a href="https://www.haverford.edu/hcah" target="_blank">Hurford Center for Arts and Humanities</a> (Haverford College), the <a href="https://sachsarts.org/" target="_blank">Sachs Program for Arts Innovation</a>, <a href="https://voxpopuligallery.org/" target="_blank">Vox Populi</a>, <a href="https://risolvestudio.com/" target="_blank">Risolve Studio</a>, <a href="https://fireballprinting.com/" target="_blank">Fireball Printing</a>...<br>
+    <br>
+    ...all the participants who generously volunteered their time, images, web browsers, and insights...
+  <br><br>
+    ...and to you, for downloading the extension, using it, and engaging in this project.</p>
+
+    <p>This website and the public version of the <em>dataDouble</em> extension were produced as part of the exhibition <em><a href="https://voxpopuligallery.org/exhibitions/roopa-vasudevan-machine-readable/">Roopa Vasudevan: Machine Readable</a></em>, held at Vox Populi in Philadelphia, PA between June 11 and July 18, 2021.</p>
+
+    <p><em>dataDouble</em> was developed in connection with the <a href="http://digitaldemocracies.org/research/beyond-verification/">Beyond Verification</a> research collective, part of the Digital Democracies Institute at Simon Fraser University.</p>
+
+    <p><a href="https://vox-populi-shop.square.site/product/roopa-vasudevan-datadouble-publication/104" target="_blank">Purchase a copy of the <em>dataDouble</em> print publication</a>, featuring digital portraits of 15 participants alongside extended interviews and an introductory essay, at the Vox Populi store.</p>
+    <br>
+    <h2>ABOUT THE ARTIST</h2>
+
+    <p><a href="https://roopavasudevan.com">Roopa Vasudevan</a> (she/her) is a media artist, computer programmer and researcher, currently based in the <a href="https://thelenapecenter.com/lenapehoking/" target="_blank">part of Lenapehoking</a> now known as Philadelphia. Her practice examines social and technological defaults; interrogates rules, conventions and protocols that we often ignore or take for granted; and centers humanity and community in explorations of technology’s impacts on society. Her work has been supported by <a href="https://www.eyebeam.org/residents/roopa-vasudevan/" target="_blank">Eyebeam</a> (Brooklyn, NY), <a href="http://www.abcnorio.org/galleries/take.html" target="_blank">ABC No Rio</a> (New York, NY), the <a href="https://collaboratives.haverford.edu/surveillance-states/" target="_blank">Philadelphia Area Creative Collaboratives</a> (Haverford, PA), <a href="https://soho20gallery.com/artist-in-residence-roopa-vasudevan/" target="_blank">SOHO20 Gallery</a> (Brooklyn, NY), <a href="https://www.spacescle.org/about/artists/roopa-vasudevan" target="_blank">SPACES</a> (Cleveland, OH), <a href="https://www.chinaresidencies.com/news/117" target="_blank">China Residencies</a>, and <a href="http://www.fluxfactory.org/fluxers/roopa-vasudevan/" target="_blank">Flux Factory</a> (Queens, NY). She is a current artist member of <a href="https://voxpopuligallery.org/artists/roopa-vasudevan/" target="_blank">Vox Populi</a>, a 30+ year old collective and arts space in Philadelphia, and is <a href="https://www.asc.upenn.edu/people/graduate-student/roopa-vasudevan" target="_blank">pursuing her PhD</a> at the Annenberg School for Communication at the University of Pennsylvania, where she researches the complex and involved relationships between new media artists and the technology industry.</p><br><br></div>
+
+
+    <script type="text/javascript">
+
+      var navLinks = document.getElementsByClassName("navLink");
+
+      if (screen.width <= 700) {
+        for (var i = 0; i < navLinks.length; i++) {
+          var distance = 13 + 4*i;
+          navLinks[i].style.top = "" + distance + "%";
+        }
+      }
+
+      function showOptions() {
+        $(".navLink").animate({width:'toggle'}, 1000);
+      }
+    </script>
+  </body>
+</html>

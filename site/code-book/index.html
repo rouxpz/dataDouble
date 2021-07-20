@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>dataDouble: Code Book</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="stylesheet" href="../css/styles.css">
+    <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <a class="heading" href="/"><h1>dataDouble</h1></a>
+      <div class="nav">
+        <a class="navLink" href="../">About the Project</a>
+        <a class="navLink" href="../acknowledgements">Acknowledgements</a>
+        <a class="navLink" href="../faq">FAQ</a>
+        <a class="navLink" href="../#download">Download</a>
+        <img id="logo" onclick="showOptions()" src="../img/dd-icon-96.png" width="50" title="Click to reveal menu options.">
+      </div>
+    </div>
+
+    <div class="projectInfo"><h2>CODE BOOK</h2>
+
+    <p class="codeInfo">This “code book” was developed as part of <em>dataDouble</em>’s first iteration. After they used the extension for two weeks, I would interview each participant about both their experience using the extension, as well as their broader understanding of and reflections on the connections between dataveillance, browsing, and identity. As part of this interview, I would show each participant this “code book” to give them an idea of how visual effects were mapped to their portrait, based on their browsing behavior.</p>
+
+    <p class="codeInfo">The code book is presented here to give you a better sense of why your portrait looks the way it does. The effects are displayed here at maximum levels and in isolation; the combination of different effects, in different proportions, will be tailored to your unique browsing habits to generate your individual portrait within the extension.</p>
+
+    <div class="main">
+      <div class="left">
+        <div class="info">
+          <div class="image">
+            <img src="../img/dd-posterization.png" width="200" alt="">
+          </div>
+          <div class="text">
+            <h3>CONSUMER & FINANCIAL SITES :: POSTERIZATION</h3>
+            <p><em>POSTERIZATION</em> is the reduction of the number of hues used to form an image.<br><br><em>SHOPPING</em> at major Internet commerce sites and visiting <em>FINANCIAL</em> institutions online will lead to greater posterization of the image. The more sites visited, the fewer hues used.<br><br>Posterization parallels the flattening of identity that occurs with the collection and use of financial data such as credit scores.</p>
+          </div>
+        </div>
+
+        <div class="info">
+          <div class="image">
+            <img src="../img/dd-edges.png" width="200" alt="">
+          </div>
+          <div class="text">
+            <h3>SOCIAL MEDIA :: EDGE DETECTION</h3>
+            <p><em>EDGE DETECTION</em> refers to a filter that finds and highlights the edges of objects in an image.</p>
+
+            <p>Spending time on <em>SOCIAL MEDIA</em> sites (Facebook, Twitter, Instagram, etc.) gram, corresponds to edge detection. The more social media utilized, the more defined the edges in the image will be.</p>
+
+            <p>This corresponds to the oft discussed manner in which social media serves to emphasize parts of your identity, and minimize others.</p>
+          </div>
+        </div>
+
+        <div class="info">
+          <div class="image">
+            <img src="../img/dd-contrast.png" width="200" alt="">
+          </div>
+          <div class="text">
+            <h3>SEARCHES :: CONTRAST</h3>
+            <p><em>CONTRAST</em> increases the difference between the lightest tones and the darkest tones in an image, which intensifies the lighting.</p>
+
+            <p>Using <em>SEARCH ENGINES</em> will increase the contrast of your image.</p>
+
+            <p>This corresponds to a more intense version of yourself that comes through in your search engine data, when you may be revealing things you wouldn’t to anyone in person.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="info">
+          <div class="image">
+            <img src="../img/dd-noise.png" width="200" alt="">
+          </div>
+          <div class="text">
+            <h3>CONFOUNDERS/ANOMALIES :: NOISE</h3>
+            <p><em>NOISE</em> is random variation, usually unwanted, of image information in a photograph.</p>
+
+            <p><em>CONFOUNDERS</em> or <em>ANOMALIES</em> — sites which do not fall into the top 50 most frequently visited websites (according to SimilarWeb SEO rankings) — contribute to the amount of noise in your portrait.</p>
+
+            <p>Unpredictable behavior makes it harder to generalize and make assumptions about your Internet behavior, and create more “noise” in your data.</p>
+          </div>
+        </div>
+
+        <div class="info">
+          <div class="image">
+            <img src="../img/dd-saturation.png" width="200" alt="">
+          </div>
+          <div class="text">
+            <h3>NEWS AND INFORMATION SITES :: SATURATION</h3>
+            <p><em>SATURATION</em> is the intensity of color present in an image.</p>
+
+            <p>The <em>DIVERSITY</em> of news and information sites you visit will increase the saturation in your portrait.</p>
+
+            <p>For example, if you just visit the New York Times all the time and nowhere else, your photo will be relatively desaturated.</p>
+          </div>
+        </div>
+
+        <div class="info">
+          <div class="image">
+            <img src="../img/dd-gamma.png" width="200" alt="">
+          </div>
+          <div class="text">
+            <h3>ADULT WEBSITES :: GAMMA</h3>
+            <p><em>GAMMA</em> refers to the relative light and dark values of an image.</p>
+
+            <p>Any <em>ADULT WEBSITES</em> visited will adjust the gamma in your image; it will make the shadows darker.</p>
+
+            <p>This filter parallels many people’s relationship with pornography on the Internet; it is something that we know many people view, but it is often kept in the shadows when discussing browsing habits.</p>
+          </div>
+        </div>
+      </div>
+    </div></div>
+
+    <script type="text/javascript">
+
+      var navLinks = document.getElementsByClassName("navLink");
+      var images = document.getElementsByTagName("img");
+
+      console.log(images);
+
+      if (screen.width <= 700) {
+        for (var i = 0; i < navLinks.length; i++) {
+          var distance = 13 + 4*i;
+          navLinks[i].style.top = "" + distance + "%";
+        }
+
+        for (var i = 1; i < images.length; i++) {
+          images[i].width = "350";
+        }
+      }
+
+      function showOptions() {
+        $(".navLink").animate({width:'toggle'}, 1000);
+      }
+    </script>
+  </body>
+</html>

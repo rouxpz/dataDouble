@@ -1,16 +1,24 @@
+@font-face {
+  font-family: 'Antarctican Mono';
+  font-style: normal;
+  font-weight: normal;
+  src: url(fonts/AntarcticanMono-Book.woff);
+}
+
 body {
-  font-family: 'Libre Franklin', sans-serif;
+  font-family: 'Antarctican Mono', sans-serif;
   width: 300px;
   padding:5px;
+  letter-spacing: -1px;
 }
 
 h1 {
   margin:0px;
 }
 
-button {
+#downloadPhoto {
   cursor: pointer;
-  font-family: 'Libre Franklin', sans-serif;
+  font-family: 'Antarctican Mono', sans-serif;
   color: #bbd7eb;
   font-weight: bold;
   margin-top: 5px;
@@ -18,15 +26,44 @@ button {
   float:right;
   background-color: #1d7bbe;
   height: 30px;
-  width: 120px;
+  width: 130px;
   outline: none;
   border-color: #13507c;
   border-radius: 3px;
   font-size: 12px;
+  letter-spacing: -1px;
 }
 
-button:hover {
+#downloadPhoto:hover {
   background-color: #13507c;
+}
+
+#downloadPhoto:disabled,
+#downloadPhoto [disabled] {
+  cursor:not-allowed;
+  color: #bccdd9;
+  background-color: #8ba8bd;
+  border-color: #acc0cf;
+}
+
+#changePhoto {
+  position:absolute;
+  bottom:0px;
+  cursor: pointer;
+  font-family: 'Antarctican Mono', sans-serif;
+  color: #1d7bbe;
+  font-weight: bold;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  float:left;
+  /* background-color: #1d7bbe; */
+  height: 20px;
+  width: 90px;
+  font-size: 10px;
+}
+
+#changePhoto:hover {
+  color: #13507c;
 }
 
 .hidden {
@@ -38,12 +75,41 @@ strong {
 }
 
 #submit {
-  color: black;
+  color: #d4f2d1;
   background-color: #2abe1d;
   display: none;
+  outline: none;
+  border-color: #0c3908;
+  border-radius: 3px;
+  float:right;
+  margin-bottom: 10px;
+  font-family: 'Antarctican Mono', sans-serif;
+  letter-spacing: -1px;
+  font-size: 12px;
+  font-weight:bolder;
+  height: 30px;
+  width: 100px;
 }
 
 #error {
   display: none;
   color: #be1d7b;
+}
+
+#siteLink {
+  color: #1d7bbe;
+  text-decoration: none;
+}
+
+#siteLink:hover {
+  font-weight: bolder;
+}
+
+#addlInfo {
+  font-size: 10px;
+}
+
+.photoDelivery {
+  /* background-color: blue; */
+  height: 40px;
 }

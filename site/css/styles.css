@@ -1,0 +1,175 @@
+@font-face {
+  font-family: 'Antarctican Mono';
+  font-style: normal;
+  font-weight: normal;
+  src: url(fonts/AntarcticanMono-Book.woff);
+}
+
+@font-face {
+  font-family: 'Antarctican Mono Italic';
+  font-style: normal;
+  font-weight: bold;
+  src: url(fonts/AntarcticanMono-BookItalic.woff);
+}
+
+@font-face {
+  font-family: 'Antarctican Mono Semibold Italic';
+  font-style: normal;
+  font-weight: bolder;
+  src: url(fonts/AntarcticanMono-SemBdIta.woff);
+}
+
+@media only screen and (max-width: 800px) {
+  body {
+    font-size: 5vw;
+  }
+
+  .nav {
+    position: fixed;
+    top: 5%;
+    right: 2%;
+    width: 50px;
+  }
+
+  .navLink {
+    background-color: black;
+    position:fixed;
+    right: 2%;
+    top: 15%;
+    display:none;
+  }
+}
+
+@media only screen and (min-width: 801px) {
+  body {
+    /* font-size: 2vw; */
+  }
+
+  .header {
+    display: flex;
+    width: 100%;
+    /* background-color: blue; */
+    vertical-align: middle;
+    padding-left:10px;
+    padding-right:10px;
+  }
+
+  .nav {
+    margin-top: 2%;
+    margin-right: 1%;
+    text-align: right;
+    flex: 50%;
+    vertical-align: middle;
+  }
+
+  .navLink {
+    padding-left: 20px;
+    padding-right: 20px;
+    display: none;
+    white-space: nowrap;
+  }
+
+  .info {
+    display:flex;
+  }
+
+  .main {
+    display: flex;
+  }
+
+  .left {
+    flex: 50%;
+  }
+
+  .right {
+    flex: 50%;
+  }
+
+  .text {
+    padding-left: 3%;
+    padding-right: 3%;
+    margin-top:0;
+  }
+}
+
+body {
+  background-color: #1a1f33;
+  color: white;
+  font-family:'Antarctican Mono', monospace;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.main {
+  margin-top: 5%;
+}
+
+h3 {
+  margin-top:0px;
+}
+
+a {
+  color: #b26877;
+  text-decoration: none;
+}
+
+a:hover {
+  font-weight: bold;
+  text-decoration: line-through;
+}
+
+#logo {
+  vertical-align: middle;
+}
+
+#logo:hover {
+  cursor: pointer;
+}
+
+.projectInfo {
+  padding-left: 1%;
+}
+
+.portrait {
+  overflow-y: scroll;
+}
+
+.portraits {
+  text-align: center;
+  margin-left:-2%;
+}
+
+.info {
+  margin-bottom: 5%;
+  height:35%;
+}
+
+.codeInfo {
+  font-size: 0.9em;
+}
+
+.infoText {
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+
+.faq {
+  padding:5px;
+  font-style: oblique;
+  background-color: #003888;
+}
+
+.faq:hover {
+  background-color: #1b7abd;
+  cursor:pointer;
+}
+
+.answer {
+  display:none;
+  padding-bottom: 10px;
+  padding-left: 5px;
+}
+
+.heading {
+  color:white;
+}

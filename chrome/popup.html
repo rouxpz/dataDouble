@@ -1,7 +1,7 @@
 <!-- dataDouble
 a project by roopa vasudevan
 browser extension for chrome
-special thanks to wendy chun, jessa lingel, and the members of the critical data studies (f18) and doing internet studies (s19) courses at upenn annenberg -->
+visit datadouble.art for more information about the project -->
 
 <!-- HTML file for extension popup. -->
 
@@ -10,7 +10,7 @@ special thanks to wendy chun, jessa lingel, and the members of the critical data
   <title>dataDouble</title>
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <script type="text/javascript" src="js/caman.full.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:300,600" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:300,600" rel="stylesheet"> -->
 </head>
 
 <body>
@@ -21,21 +21,28 @@ special thanks to wendy chun, jessa lingel, and the members of the critical data
     <p>Before we begin, please upload a photograph of yourself.<br><br><strong>The photo must be exactly 300 pixels wide by 400 pixels high.</strong></p>
     <p id="error"><em><strong>Wrong size. Please choose another photo with the specified dimensions.</strong></em></p>
     <form id="upload" class = "hidden" enctype="multipart/form-data" method="post" action="#">
-      <input  type="file" id="fileupload" name="files[]" multiple />
+      <input  type="file" id="fileupload" name="files[]" multiple /><br><br>
       <input type="submit" value="submit" id="submit" />
     </form>
   </div>
   <div id="stats" class = "hidden">
-    <h1><em>dataDouble stats</em></h1>
+    <h1><em>dataDouble</em> : stats</h1>
+    <p id="addlInfo"><em>For more information about this project, visit <a id="siteLink" href="https://datadouble.art" target="_blank">datadouble.art</a>.</em></p>
     <p id="days"><strong>Days since installation: </strong><span id="daysUsed"></span></p>
     <p id="sites"><strong>Total Sites Visited: </strong><span id="totalSites"></span></p>
     <p id="unique"><strong>Total Unique Domains Visited: </strong><span id="domains"></span></p>
     <p id="cats"><strong>Top Categories: </strong></p>
     <p id = "words"><strong>Top 5 Keywords Used: </strong><span id="data"></span><span id="keyLog"></span></p>
-    <a id="toDL" download = "portrait.png" class="hidden">
-      <button id="downloadPhoto">download portrait</button>
-    </a>
-    <br>
+    <div class="photoDelivery">
+      <a id="changePhoto">change photo</a>
+      <a id="toDL" download = "portrait.png">
+        <button disabled id="downloadPhoto">download portrait</button>
+      </a>
+    </div>
+  </div>
+
+  <div id="changePhotoAck" class="hidden">
+    <h4>Please refresh the popup to upload your new photo.</h4>
   </div>
 
     <script type="text/javascript" src="js/popup.js"></script>
