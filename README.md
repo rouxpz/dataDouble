@@ -3,7 +3,7 @@
 
 *dataDouble* (2018-present) is a project designed to illuminate the ways in which our identities are flattened and reduced by data collection. Finding inspiration in the idea of the “data clone”, a likeness developed out of the digital traces that we (voluntarily or involuntarily) leave behind in our day to day interactions with technology, the project seeks to translate an individual user’s browsing data into a visual interpretation of how they are seen in the eyes of those extracting their information.    
 
-<img src="img/01-vasudevan.png" alt="Screenshot of portrait and extension side by side" width="700" style="margin-right:10px;"/>
+<img src="site/img/01-dd-small.png" alt="Screenshot of portrait and extension side by side" width="700" style="margin-right:10px;"/>
 
 The core of *dataDouble* consists of a web browser extension developed for both Google Chrome and Mozilla Firefox. The extension tracks the URLs of all of the websites a user visits while it is running, as well as any text typed into the body of a website, including search engine queries, social media updates, and composed emails.
 
