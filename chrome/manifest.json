@@ -6,7 +6,7 @@
     "48": "icons/dd-icon-48.png",
     "96": "icons/dd-icon-96.png"
   },
-  "permissions": ["activeTab", "declarativeContent", "storage", "downloads"],
+  "permissions": ["declarativeContent", "storage"],
   "background": {
       "scripts": ["js/background.js"],
       "persistent": true

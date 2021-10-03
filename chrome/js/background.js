@@ -23,7 +23,7 @@ var count = {};
 
 chrome.runtime.onInstalled.addListener(function() {
   chrome.storage.sync.get(["photo", "data", "keys", "linkNumber", "totalPortraits", "total", "unique", "wordCount"], function(obj) {
-    console.log(obj);
+    // console.log(obj);
     if (obj.photo === undefined) {
       // console.log("no filename");
       filename = '';
@@ -46,7 +46,7 @@ chrome.runtime.onInstalled.addListener(function() {
       uniqueSites = obj.unique;
       count = obj.wordCount;
     }
-    console.log(obj.wordCount);
+    // console.log(obj.wordCount);
   });
 
   chrome.storage.sync.set({photo: filename, data: updatedData, keys: keys, linkNumber: linkNumber, totalPortraits: totalPortraits, total:totalSites, unique:uniqueSites, wordCount: count}, function() {
